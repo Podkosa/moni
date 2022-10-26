@@ -24,5 +24,7 @@ Alternatevly you can write your own settings.py file and mount it directly to /b
 **TODO:**
 
 - Slack integration (Handler for alerts and run commands from Slask)
+- Telegram integration (same)
+- Parse checkers and handlers settings from .yml file
 - Check if docs are protected by API key
 - Tests
