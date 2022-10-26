@@ -1,11 +1,12 @@
 from fastapi import FastAPI, Depends
 
-from .routers import check
+from .routers import check, slack
 from .auth import api_key_auth
 from . import on_startup
 
 app = FastAPI(dependencies=[Depends(api_key_auth)])
 app.include_router(check.router)
+app.include_router(slack.router)
 
 @app.on_event('startup')
 async def set_up():

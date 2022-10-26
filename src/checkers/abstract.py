@@ -23,6 +23,7 @@ class Checker(ABC):
     async def check(self) -> dict:
         ...
         return {
+            'host': str,
             'status': bool,
             'message': str
         }
