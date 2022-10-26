@@ -1,4 +1,8 @@
-# Monitoring tool and bot for Python servers
+<p align="center">
+<b>Moni</b>
+<br>
+<em>a monitoring bot for your servers</em>
+</p>
 
 **Current features:**
 
