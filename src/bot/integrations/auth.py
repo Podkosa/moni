@@ -6,7 +6,7 @@ import settings
 
 
 async def slack_key_verification(request: Request):
-    slack_signing_secret = settings.SLACK_KEY
+    slack_signing_secret = settings.SLACK_SIGNING_SECRET
     timestamp = request.headers['X-Slack-Request-Timestamp']
     request_body = await request.body()
     request_body = request_body.decode("utf-8")

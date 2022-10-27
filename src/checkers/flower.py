@@ -45,7 +45,7 @@ class FlowerChecker(Checker):
             self.data['queues'].append(queue)
 
     def _is_queue_normal(self, queue:dict) -> bool:
-        return queue['messages'] >= settings.QUEUE_MESSAGES_THRESHOLD
+        return queue['messages'] < settings.QUEUE_MESSAGES_THRESHOLD
 
     def _prepare_message(self) -> str:
         queue_states = []

@@ -12,15 +12,14 @@ DEFAULT_REQUEST_TIMEOUT = aiohttp.ClientTimeout(
 logger.handlers = [logging.StreamHandler(sys.stdout)]
 logger.setLevel(logging.INFO)
 
+### Integrations ###
+SLACK_SIGNING_SECRET = os.getenv('SLACK_SIGNING_SECRET', '')
+
 ### Handlers ###
 # Slack
-SLACK_HOST = os.getenv('SLACK_HOST', '')
-SLACK_KEY = os.getenv('SLACK_KEY', '')
-
 HANDLERS = {
     'slack': {
-        'host': SLACK_HOST,
-        'key': SLACK_KEY
+        'webhook_url': os.getenv('SLACK_WEBHOOK_URL', '')
     }
 }
 
