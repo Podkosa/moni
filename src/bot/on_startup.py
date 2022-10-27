@@ -1,5 +1,5 @@
-import settings, asyncio
-from checkers import watchdog
+import asyncio
+import settings, watchdog
 
 class SettingsError(Exception):
     pass

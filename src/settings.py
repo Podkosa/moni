@@ -27,7 +27,7 @@ HANDLERS = {
 ### Checkers ###
 # Flower
 # Currently only broker queues size
-FLOWER_HOSTS = os.getenv('FLOWER_HOSTS', '').split(' ')
+FLOWER_HOSTS = os.getenv('FLOWER_HOSTS', '').split()
 FLOWER_USER = os.getenv('FLOWER_USER', '')                                  # If you have different user/passwords in your flower instances,
 FLOWER_PASSWORD = os.getenv('FLOWER_PASSWORD', '')                          # you can set them manually in CHECKERS.
 QUEUE_MESSAGES_THRESHOLD = int(os.getenv('QUEUE_MESSAGES_THRESHOLD', 100))  # Alert if queue size is equal or greater

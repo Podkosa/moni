@@ -18,7 +18,7 @@ Can be run in two ways:
 The watchdog will launch inside the bot async event loop. Keep in mind thath they both will share a single thread, therefore can impact performance and even block one-another.
 More compact option, but not fit for scaling.
 2) Standalone.
-You can run ./checkers/watchdog.py as a separate process/container.
+You can run ./watchdog.py as a separate process/container.
 
 **Settings:**
 Easiest way is through environmental variables. See sample.env for a full list.
@@ -29,6 +29,6 @@ Alternatevly you can write your own settings.py file and mount it directly to /b
 
 - Slack integration (Handler for alerts and run commands from Slask)
 - Telegram integration (same)
+- File and stdout handler
 - Parse checkers and handlers settings from .yml file
-- Check if docs are protected by API key
 - Tests
