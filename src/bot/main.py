@@ -15,10 +15,3 @@ async def set_up():
 @app.get('/ping')
 def ping():
     return 'Pong!'
-
-# @app.get('/help')
-# def help():
-#     return """Commands:
-# /check/queues   Get queues size
-# /check/all      Run a full check with standard alerts
-# """

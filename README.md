@@ -1,5 +1,5 @@
 <p align="center">
-<b>Moni</b>
+<img src="https://repository-images.githubusercontent.com/557768275/6a8a5d08-dc4f-4c19-9466-024af5c4d828">
 <br>
 <em>a monitoring bot for your servers</em>
 </p>
