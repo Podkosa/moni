@@ -4,8 +4,8 @@ from .routers import check, slack
 from .auth import api_key_auth
 from . import on_startup
 
-app = FastAPI(dependencies=[Depends(api_key_auth)])
-app.include_router(check.router)
+app = FastAPI()
+app.include_router(check.router, dependencies=[Depends(api_key_auth)])
 app.include_router(slack.router)
 
 @app.on_event('startup')
@@ -16,9 +16,9 @@ async def set_up():
 def ping():
     return 'Pong!'
 
-@app.get('/help')
-def help():
-    return """Commands:
-/check/queues   Get queues size
-/check/all      Run a full check with standard alerts
-"""
+# @app.get('/help')
+# def help():
+#     return """Commands:
+# /check/queues   Get queues size
+# /check/all      Run a full check with standard alerts
+# """

@@ -1,17 +1,11 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends, Request
 
 import checkers
-from bot.integrations import slack
+from bot.integrations import slack, auth
 
-router = APIRouter(prefix='/slack')
+router = APIRouter(prefix='/slack', dependencies=[Depends(auth.slack_key_verification)])
 
-@router.post('/check/all')
-async def check_all() -> None:
-    await checkers.check_all()
-
-@router.post('/check/queues')
-async def queues(hosts: list[str] | None = None) -> dict:
-    """Current queues size"""
-    results = await checkers.FlowerChecker.check_hosts(hosts)
-    response = slack.prepare_check_response(results)
-    return response
+@router.post('/')
+async def slack_request(request: Request):
+    """Main slack endpoint"""
+    return await slack.process_request(request)

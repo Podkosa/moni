@@ -14,17 +14,13 @@ logger.setLevel(logging.INFO)
 
 ### Handlers ###
 # Slack
-SLACK_HOST = ''
-SLACK_PORT = int(os.getenv('SLACK_PORT', 1))
-SLACK_USER = os.getenv('SLACK_USER', '')
-SLACK_PASSWORD = os.getenv('SLACK_PASSWORD', '')
+SLACK_HOST = os.getenv('SLACK_HOST', '')
+SLACK_KEY = os.getenv('SLACK_KEY', '')
 
 HANDLERS = {
     'slack': {
         'host': SLACK_HOST,
-        'port': SLACK_PORT,
-        'username': SLACK_USER,
-        'password': SLACK_PASSWORD
+        'key': SLACK_KEY
     }
 }
 
@@ -49,5 +45,5 @@ CHECKERS = {
 }
 
 ### Watchdog ###
-WATCHDOG_ON_BOT_STARTUP = bool(os.getenv('WATCHDOG_ON_BOT_STARTUP', True))  # Start Watchdog inside Bot async event loop. May impact performance.
+WATCHDOG_ON_BOT_STARTUP = bool(int(os.getenv('WATCHDOG_ON_BOT_STARTUP', 1)))# Start Watchdog inside Bot async event loop. May impact performance.
 WATCHDOG_CYCLE = int(os.getenv('WATCHDOG_CYCLE', 300))                      # Seconds
