@@ -9,7 +9,7 @@ from settings import logger
 
 @dataclass
 class FlowerChecker(Checker):
-    include_normal_queues: bool = False
+    include_normal: bool = False
 
     async def check(self) -> dict:
         try:
@@ -50,7 +50,7 @@ class FlowerChecker(Checker):
     def _prepare_message(self) -> str:
         queue_states = []
         for queue in self.data['queues']:
-            if not self.include_normal_queues and queue['is_normal']:
+            if not self.include_normal and queue['is_normal']:
                 continue
             _host = f"Host: {self.host}"
             _queue = f"Queue: {queue['name']}"
@@ -72,5 +72,5 @@ class FlowerChecker(Checker):
         else:
             hosts_to_check = servers
 
-        tasks = (cls(host=host, include_normal_queues=True, **params).check() for host, params in hosts_to_check.items())
+        tasks = (cls(host=host, include_normal=True, **params).check() for host, params in hosts_to_check.items())
         return await asyncio.gather(*tasks)
