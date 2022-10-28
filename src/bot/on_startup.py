@@ -1,5 +1,7 @@
 import asyncio
-import settings, watchdog
+
+from conf import settings
+import watchdog
 
 
 class SettingsError(Exception):

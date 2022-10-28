@@ -2,7 +2,7 @@ import hmac, hashlib
 from fastapi import HTTPException, Request
 from starlette.status import HTTP_403_FORBIDDEN
 
-import settings
+from conf import settings
 
 
 async def slack_signing_secret_validation(request: Request):

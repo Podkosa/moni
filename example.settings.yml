@@ -1,20 +1,25 @@
 checkers:
   flower:
-    handlers: [slack]
     default:                      # Default values for servers
+      handlers: [slack]
+      cycle: 50
       user: user1
       password: password1
-    servers:
+    servers:                      # Server settings can be set, in lookup order, on Server, Checker (per-checker default) or Watchdog (global default) level.
       host1.com:
       host2.com:
         user: user2
         password: password2
         port: 1111                # 443 HTTPS if not speciied
+      host3.com:
+        handlers: [log]
+        cycle: 30
     options:
       queues:
         messages_threshold: 100   # Alert if queue size is greater or equal
 
 handlers:
+  log:
   slack:
     webhook_url: https://hooks.slack.com/services/...
 
@@ -22,7 +27,9 @@ request_timeout: 10               # Default timeout for all outgoing requests
 
 watchdog:
   integrated: true                # Start Watchdog inside Bot async event loop.
-  cycle: 300                      # Seconds
+  default:                        # Global default values
+    cycle: 300
+    handlers: [log]
 
 integrations:
   slack:

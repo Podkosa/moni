@@ -9,7 +9,7 @@
 - Bot (HTTP-server) for on-demand checks
 - Autonomous compact watchdog for monitoing and alerting
 - Slack integration: alerts to channel and slash commands
-- Checks: Celery broker queues size (through Flower API)
+- Checks: Celery broker queues size (through Flower API) (working on more)
 - Speed: Asynchronous requests, Python 3.11 and FastAPI ensure the max gauge of your *Python* 
 speedometer.
 - Declarative YAML settings
@@ -37,14 +37,14 @@ You can turn off the watchdog and run checks from the bot at your own pace.
 Define your servers, handlers, integrations and other settings declaratively in `settings.yml`. See `example.settings.yml`.
 Set environmental variables `API_KEY` and `BOT_PORT` for the bot. See `example.env`.
 
-If you're deploying inside a container (e.g. Docker Compose), be sure to mount `./settings.yml:/botapp/settings.yml` through `volumes` and set env variables through `env_file`.
+If you're deploying inside a container (e.g. Docker Compose), be sure to mount `./settings.yml:/botapp/settings.yml` through `volumes` and set env variables (e.g. `env_file`).
 
 **TODO:**
 
 - Telegram integration
 - Health/heartbeat/pings checker
 - Customisable checker (get response from server, parse it in some way, figure out the status)
-- File, stdout, email handler
+- File, email handler
 - Remember previous alerts for subsequent checks, "back to normal" optional messages
 - Slack app distribution or manifest
 - More alert handlers

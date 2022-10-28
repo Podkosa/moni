@@ -2,7 +2,7 @@ from fastapi.security import api_key
 from fastapi import Security, HTTPException
 from starlette.status import HTTP_403_FORBIDDEN
 
-import settings
+from conf import settings
 
 
 key_name = 'access_token'

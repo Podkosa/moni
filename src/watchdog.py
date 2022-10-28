@@ -2,22 +2,14 @@
 
 import asyncio
 
-import settings, checkers
-from settings import logger
+from conf.settings import logger
+import checkers
 
 
 async def watch():
     """Watchdog entrypoint"""
-    logger.info('Watchdog is running.')
-    while True:
-        logger.info('Watchdog: checking servers')
-        try:
-            await checkers.check_all()
-        except:
-            logger.exception('Watchdog: Exception during the monitoring.')
-        else:
-            logger.info('Watchdog: all checks are finished')
-        await asyncio.sleep(settings.WATCHDOG['cycle'])
+    logger.info('Watchdog is running')
+    await checkers.monitor()
 
 if __name__ == '__main__':
     asyncio.run(watch())

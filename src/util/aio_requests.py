@@ -1,7 +1,7 @@
 from typing import Any
 import aiohttp
 
-import settings
+from conf import settings
 
 
 async def get(url: str, params: dict | None = None, **kwargs) -> dict:

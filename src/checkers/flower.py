@@ -1,19 +1,18 @@
 import aiohttp, asyncio
 from fastapi import HTTPException
 
+from conf import settings
+from conf.settings import logger
 from .abstract import Checker
 from util import aio_requests, messages
-import settings
-from settings import logger
 
 
 class FlowerChecker(Checker):
     options: dict = settings.CHECKERS['flower']['options']
 
-    def __init__(self, user: str, password: str, *args, include_normal: bool = False, **kwargs):
+    def __init__(self, user: str, password: str, *args, **kwargs):
         self.user = user
         self.password = password
-        self.include_normal = include_normal
         super().__init__(*args, **kwargs)    
 
     async def check(self) -> dict:
