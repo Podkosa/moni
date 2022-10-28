@@ -3,5 +3,5 @@ from .abstract import Handler
 
 
 class LogHandler(Handler):
-    async def handle(self, message: str):
+    async def _send_message(self, message: str):
         logger.info(message)
