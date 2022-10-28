@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import asyncio
+import uvloop
 
 from conf.settings import logger
 import checkers
@@ -12,4 +13,5 @@ async def watch():
     await checkers.monitor()
 
 if __name__ == '__main__':
-    asyncio.run(watch())
+    with asyncio.Runner(loop_factory=uvloop.new_event_loop) as runner:
+        runner.run(watch())

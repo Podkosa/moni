@@ -10,8 +10,8 @@
 - Autonomous compact watchdog for monitoing and alerting
 - Slack integration: alerts to channel and slash commands
 - Checks: Celery broker queues size (through Flower API) (working on more)
-- Speed: Asynchronous requests, Python 3.11 and FastAPI ensure the max gauge of your *Python* 
-speedometer.
+- Speed: Asynchronous requests, Python 3.11, uvloop and FastAPI ensure the max gauge of your *Python* 
+speedometer
 - Declarative YAML settings
 - Interactive docs at /docs
 
@@ -30,7 +30,7 @@ More compact option, but not fit for scaling.
 2) Standalone.
 You can run ./watchdog.py as a separate process/container, even without the bot.
 3) Disabled.
-You can turn off the watchdog and run checks from the bot at your own pace.
+You can turn off the watchdog completely and run checks from the bot at your own pace.
 
 **Settings:**
 
@@ -45,6 +45,7 @@ If you're deploying inside a container (e.g. Docker Compose), be sure to mount `
 - Customisable checker (get response from server, parse it in some way, figure out the status)
 - File, email handler
 - Remember previous alerts for subsequent checks, "back to normal" optional messages
+- Alert when X is not normal for more than N time
 - Slack app distribution or manifest
 - More alert handlers
 - More server checkers
