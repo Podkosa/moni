@@ -35,9 +35,9 @@ You can turn off the watchdog and run checks from the bot at your own pace.
 **Settings:**
 
 Define your servers, handlers, integrations and other settings declaratively in `settings.yml`. See `example.settings.yml`.
-Set environmental variables `API_KEY` and `BOT_PORT` for the bot. See `example.env`.
+Set environmental variables `API_KEY` for the bot. See `example.env`.
 
-If you're deploying inside a container (e.g. Docker Compose), be sure to mount `./settings.yml:/botapp/settings.yml` through `volumes` and set env variables (e.g. `env_file`).
+If you're deploying inside a container (e.g. Docker Compose), be sure to mount `./settings.yml:/botapp/settings.yml` through `volumes` and set env variable `API_KEY` (e.g. `env_file`).
 
 **TODO:**
 
