@@ -1,3 +1,4 @@
+api_key: key                      # Access to all bot endpoints. Send it as `access_token` in header/cookie/query_param with your requests.
 checkers:
   flower:
     default:                      # Default values for servers

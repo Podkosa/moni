@@ -21,7 +21,7 @@ HTTP server, handling incoming requests (REST, slash commands, integrations, web
 
 **Watchdog:**
 
-Periodically monitors servers with Checkers and alerts through Handlers. See `settings.yml` for possible configurations.
+Periodically monitors servers with Checkers and alerts through Handlers.
 Can be run in two ways:
 
 1) Integrated (default).
@@ -35,9 +35,8 @@ You can turn off the watchdog and run checks from the bot at your own pace.
 **Settings:**
 
 Define your servers, handlers, integrations and other settings declaratively in `settings.yml`. See `example.settings.yml`.
-Set environmental variables `API_KEY` for the bot. See `example.env`.
-
-If you're deploying inside a container (e.g. Docker Compose), be sure to mount `./settings.yml:/botapp/settings.yml` through `volumes` and set env variable `API_KEY` (e.g. `env_file`).
+This file will include your sensetive data, so be sure to take security measures.
+If you're deploying inside a container (e.g. Docker Compose), be sure to mount `./settings.yml:/botapp/settings.yml` through `volumes`.
 
 **TODO:**
 

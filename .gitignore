@@ -1,5 +1,4 @@
 __pycache__
-.env
 .vscode
 docker-compose.yml
 settings.yml

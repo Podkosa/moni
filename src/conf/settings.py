@@ -1,4 +1,4 @@
-import os, logging, sys
+import logging, sys
 import aiohttp, yaml
 from fastapi.logger import logger
 
@@ -12,7 +12,7 @@ logger.setLevel(logging.INFO)
 ### General ###
 yml: dict = yaml.safe_load(open('settings.yml'))
 
-API_KEY = os.getenv('API_KEY')
+API_KEY = yml.pop('api_key', None)
 REQUEST_TIMEOUT = aiohttp.ClientTimeout(total=yml.get('request_timeout'))
 
 ### Watchdog ###
@@ -29,7 +29,7 @@ for checker, conf in CHECKERS.items():
             params = conf['servers'][host] = {}
         params.setdefault('handlers', defaults.get('handlers'))
         params.setdefault('cycle', defaults.get('cycle'))
-        getattr(default_setters, checker, lambda *args: None)(params, defaults)    # Server level defaults
+        getattr(default_setters, checker, lambda *args: None)(params, defaults) # Server level defaults
 
 ### Handlers ###
 HANDLERS = yml.get('handlers', {})
