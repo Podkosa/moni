@@ -1,6 +1,6 @@
 FROM python:3.11
 
-WORKDIR /botapp
+WORKDIR /moni
 
 COPY requirements.txt .
 
