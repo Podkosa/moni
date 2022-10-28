@@ -6,10 +6,13 @@
 
 **Current features:**
 
-- Monitor Celery broker queues size (through Flower API)
-- Autonomous watchdog
-- Slack integration (alerts to channel and slash commands)
-- REST interface
+- Bot (HTTP-server) for on-demand checks
+- Autonomous compact watchdog for monitoing and alerting
+- Slack integration: alerts to channel and slash commands
+- Checks: Celery broker queues size (through Flower API)
+- Speed: Asynchronous requests, Python 3.11 and FastAPI ensure the max gauge of your *Python* 
+speedometer.
+- Declarative YAML settings
 - Interactive docs at /docs
 
 **Bot:**
@@ -22,10 +25,12 @@ Periodically monitors servers with Checkers and alerts through Handlers. See `se
 Can be run in two ways:
 
 1) Integrated (default).
-Watchdog will launch inside the bot async event loop. Keep in mind thath they both will share a single thread, therefore can impact performance and even block one another.
+Watchdog will launch inside the bot async event loop. *Keep in mind thath they both will share a single thread, therefore can impact performance and even block one another.*
 More compact option, but not fit for scaling.
 2) Standalone.
-You can run ./watchdog.py as a separate process/container.
+You can run ./watchdog.py as a separate process/container, even without the bot.
+3) Disabled.
+You can turn off the watchdog and run checks from the bot at your own pace.
 
 **Settings:**
 
@@ -37,10 +42,13 @@ If you're deploying inside a container (e.g. Docker Compose), be sure to mount `
 **TODO:**
 
 - Telegram integration
-- File and stdout handler
+- Health/heartbeat/pings checker
+- Customisable checker (get response from server, parse it in some way, figure out the status)
+- File, stdout, email handler
 - Remember previous alerts for subsequent checks, "back to normal" optional messages
 - Slack app distribution or manifest
 - More alert handlers
 - More server checkers
+- Optional mutiprocessing, when there will be more checkers
 - More slash commands and REST options
 - Tests
