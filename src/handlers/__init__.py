@@ -1,2 +1,2 @@
 from .slack import SlackHandler
-from .utils import get_handlers_cls
+from .utils import get_handler_cls

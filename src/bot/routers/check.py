@@ -2,10 +2,13 @@ from fastapi import APIRouter
 
 import checkers
 
+
 router = APIRouter(prefix='/check')
+
 
 @router.post('/all')
 async def check_all():
+    #TODO: optionally run in the background
     await checkers.check_all()
 
 @router.get('/queues')

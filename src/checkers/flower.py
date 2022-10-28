@@ -1,4 +1,3 @@
-from dataclasses import dataclass
 import aiohttp, asyncio
 from fastapi import HTTPException
 
@@ -7,9 +6,15 @@ from util import aio_requests, messages
 import settings
 from settings import logger
 
-@dataclass
+
 class FlowerChecker(Checker):
-    include_normal: bool = False
+    options: dict = settings.CHECKERS['flower']['options']
+
+    def __init__(self, user: str, password: str, *args, include_normal: bool = False, **kwargs):
+        self.user = user
+        self.password = password
+        self.include_normal = include_normal
+        super().__init__(*args, **kwargs)    
 
     async def check(self) -> dict:
         try:
@@ -32,8 +37,8 @@ class FlowerChecker(Checker):
 
     async def _get_data(self):
         self.response = await aio_requests.get(
-            f'https://{self.host}/flower/api/queues/length',
-            auth=aiohttp.BasicAuth(settings.FLOWER_USER, settings.FLOWER_PASSWORD)
+            f'https://{self.host}{self.port if self.port else ""}/flower/api/queues/length',
+            auth=aiohttp.BasicAuth(self.user, self.password)
         )
 
     def _parse_data(self):
@@ -45,7 +50,7 @@ class FlowerChecker(Checker):
             self.data['queues'].append(queue)
 
     def _is_queue_normal(self, queue:dict) -> bool:
-        return queue['messages'] < settings.QUEUE_MESSAGES_THRESHOLD
+        return queue['messages'] < self.options['queues']['messages_threshold']
 
     def _prepare_message(self) -> str:
         queue_states = []

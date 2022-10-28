@@ -1,0 +1,29 @@
+checkers:
+  flower:
+    handlers: [slack]
+    default:                      # Default values for servers
+      user: user1
+      password: password1
+    servers:
+      host1.com:
+      host2.com:
+        user: user2
+        password: password2
+        port: 1111                # 443 HTTPS if not speciied
+    options:
+      queues:
+        messages_threshold: 100   # Alert if queue size is greater or equal
+
+handlers:
+  slack:
+    webhook_url: https://hooks.slack.com/services/...
+
+request_timeout: 10               # Default timeout for all outgoing requests
+
+watchdog:
+  integrated: true                # Start Watchdog inside Bot async event loop.
+  cycle: 300                      # Seconds
+
+integrations:
+  slack:
+    signing_secret: signing_secret

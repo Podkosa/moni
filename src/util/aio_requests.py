@@ -12,7 +12,7 @@ async def post(url: str, data: dict, **kwargs) -> dict:
 
 async def request(method, url, **kwargs) -> Any:
     response_type = kwargs.pop('response_type', 'json')
-    async with aiohttp.ClientSession(timeout=settings.DEFAULT_REQUEST_TIMEOUT, raise_for_status=True) as session:
+    async with aiohttp.ClientSession(timeout=settings.REQUEST_TIMEOUT, raise_for_status=True) as session:
         async with session.request(method, url, **kwargs) as resp:
             match response_type:
                 case 'json':
@@ -21,5 +21,7 @@ async def request(method, url, **kwargs) -> Any:
                     return await resp.text()
                 case 'bytes':
                     return await resp.read()
+                case 'ignore':
+                    return
                 case _:
                     raise NotImplementedError

@@ -5,6 +5,7 @@ from starlette.status import HTTP_400_BAD_REQUEST
 
 import checkers
 
+
 async def process_request(request: Request) -> Any:
     json = await request.form()
     match json['command']:

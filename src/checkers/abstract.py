@@ -1,14 +1,12 @@
 from abc import ABC, abstractmethod
-from dataclasses import dataclass, field
 from handlers.abstract import Handler
 
-@dataclass
+
 class Checker(ABC):
-    username: str
-    password: str
-    host: str
-    port: str | int | None = None
-    handlers: list[Handler] = field(default_factory=lambda: [])
+    def __init__(self, host: str, port: int | None = None, handlers: list[Handler] = []):
+        self.host = host
+        self.port = port
+        self.handlers = handlers
 
     async def run(self):
         self.result = await self.check()

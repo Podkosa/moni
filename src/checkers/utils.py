@@ -10,8 +10,8 @@ async def check_all():
     async with asyncio.TaskGroup() as tg:
         for checker_name, conf in settings.CHECKERS.items():
             Checker = checkers.get_checker_cls(checker_name)
-            _handlers = [handlers.get_handlers_cls(handler)() for handler in conf['handlers']]
+            handlers_list = [handlers.get_handler_cls(handler)() for handler in conf['handlers']]
             for host, params in conf['servers'].items():
                 tg.create_task(
-                    Checker(handlers=_handlers, host=host, **params).run()
+                    Checker(handlers=handlers_list, host=host, **params).run()
                 )

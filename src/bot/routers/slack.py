@@ -1,9 +1,10 @@
 from fastapi import APIRouter, Depends, Request
 
-import checkers
 from bot.integrations import slack, auth
 
-router = APIRouter(prefix='/slack', dependencies=[Depends(auth.slack_key_verification)])
+
+router = APIRouter(prefix='/slack', dependencies=[Depends(auth.slack_signing_secret_validation)])
+
 
 @router.post('/')
 async def slack_request(request: Request):

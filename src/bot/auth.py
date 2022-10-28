@@ -4,10 +4,12 @@ from starlette.status import HTTP_403_FORBIDDEN
 
 import settings
 
+
 key_name = 'access_token'
 api_key_query = api_key.APIKeyQuery(name=key_name, auto_error=False)
 api_key_header = api_key.APIKeyHeader(name=key_name, auto_error=False)
 api_key_cookie = api_key.APIKeyCookie(name=key_name, auto_error=False)
+
 
 def api_key_auth(
     api_key_query: str = Security(api_key_query),

@@ -5,8 +5,8 @@ from starlette.status import HTTP_403_FORBIDDEN
 import settings
 
 
-async def slack_key_verification(request: Request):
-    slack_signing_secret = settings.SLACK_SIGNING_SECRET
+async def slack_signing_secret_validation(request: Request):
+    slack_signing_secret = settings.INTEGRATIONS['slack']['signing_secret']
     timestamp = request.headers['X-Slack-Request-Timestamp']
     request_body = await request.body()
     request_body = request_body.decode("utf-8")
