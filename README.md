@@ -12,11 +12,9 @@
 - REST interface
 - Interactive docs at /docs
 
-
 **Bot:**
 
 HTTP server, handling incoming requests (REST, slash commands, integrations, webhooks etc.). Can check on-demand and return the results or launch a full check in the background with standard alerts.
-
 
 **Watchdog:**
 
@@ -29,7 +27,6 @@ More compact option, but not fit for scaling.
 2) Standalone.
 You can run ./watchdog.py as a separate process/container.
 
-
 **Settings:**
 
 Define your servers, handlers, integrations and other settings declaratively in `settings.yml`. See `example.settings.yml`.
@@ -37,12 +34,12 @@ Set environmental variables `API_KEY` and `BOT_PORT` for the bot. See `example.e
 
 If you're deploying inside a container (e.g. Docker Compose), be sure to mount `./settings.yml:/botapp/settings.yml` through `volumes` and set env variables through `env_file`.
 
-
 **TODO:**
 
 - Telegram integration
 - File and stdout handler
 - Remember previous alerts for subsequent checks, "back to normal" optional messages
+- Slack app distribution or manifest
 - More alert handlers
 - More server checkers
 - More slash commands and REST options

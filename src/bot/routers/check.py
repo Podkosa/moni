@@ -12,6 +12,6 @@ async def check_all():
     await checkers.check_all()
 
 @router.get('/queues')
-async def queues(hosts: list[str] | None = None) -> list:
+async def queues(hosts: list[str] | None = None) -> list[dict]:
     """Current queues size"""
     return await checkers.FlowerChecker.check_hosts(hosts)
