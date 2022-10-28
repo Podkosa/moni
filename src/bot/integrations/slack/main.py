@@ -7,17 +7,17 @@ import checkers
 
 
 async def process_request(request: Request) -> Any:
-    json = await request.form()
-    match json['command']:
+    data = await request.form()
+    text = data.get('text')
+    arguments = text.split(' ') if text else None  # type: ignore
+    match data['command']:
         case '/queues':
-            text = json.get('text')
-            hosts = text.split(' ') if text else None  # type: ignore
-            results = await checkers.FlowerChecker.check_hosts(hosts)
-            return prepare_check_response(results)
+            results = await checkers.FlowerChecker.check_hosts(arguments)
         case _:
             raise HTTPException(status_code=HTTP_400_BAD_REQUEST, detail='Unknown command')
+    return prepare_response(results)
 
-def prepare_check_response(results: list[dict]) -> dict:
+def prepare_response(results: list[dict]) -> dict:
     response = {
     "response_type": "in_channel",
     "text": '\n\n'.join((result['message'] for result in results))

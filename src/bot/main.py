@@ -1,13 +1,16 @@
 from fastapi import FastAPI, Depends
 
-from .routers import check, slack
-from .auth import api_key_auth
-from . import on_startup
+from conf import settings
+from .endpoints import check
+from . import on_startup, auth, integrations
 
 
 app = FastAPI()
-app.include_router(check.router, dependencies=[Depends(api_key_auth)])
-app.include_router(slack.router)
+app.include_router(check.router, dependencies=[Depends(auth.api_key_auth)])
+for integration in settings.INTEGRATIONS:
+    module = getattr(integrations, integration)
+    print(module.__dict__)
+    app.include_router(module.endpoints.router)
 
 
 @app.on_event('startup')
@@ -15,5 +18,5 @@ async def set_up():
     await on_startup.set_up()
 
 @app.get('/ping')
-def ping():
+def ping() -> str:
     return 'Pong!'
