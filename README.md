@@ -8,9 +8,9 @@
 
 - :robot: Bot: HTTP-server for on-demand checks
 - :dog: Watchdog: Compact daemon for monitoing and alerting
-- :mag: Checkers: Ping, Flower/Celery (currently only queues size) (working on more)
+- :mag: Checkers: Ping, Celery/Flower (workers status and queues size)  (working on more)
 - :loudspeaker: Handlers: Slack, Log, File
-- :speech_balloon: Slack integration: slash commands and alerts to channel
+- :speech_balloon: Slack integration
 - :fire: Speed: Async requests, Python 3.11, uvloop and FastAPI ensure the max gauge of your *Python* 
 speedometer
 - :hibiscus: Settings: Declarative YAML settings
@@ -39,18 +39,20 @@ Define your servers, handlers, integrations and other settings declaratively in 
 This file will include your sensetive data, so be sure to take security measures.
 If you're deploying inside a container (e.g. Docker Compose), be sure to mount `./settings.yml:/botapp/settings.yml` through `volumes`.
 
+**Integrations:**
+
+Slack: alerts to channels and slash commands. See `./integrations_docs/slack_app_manifest.yml`.
+
 **TODO:**
 
 - Telegram integration
-- Health/heartbeat/pings checker
-- Customisable checker (get response from server, parse it in some way, figure out the status)
 - Email handler
 - Remember previous alerts for subsequent checks, "back to normal" optional messages
 - Alert when X is not normal for more than N time
 - Slack timeout for /commands is 3 seconds. Refactor to delay the response.
-- Slack app distribution or manifest
 - More alert handlers
 - More server checkers
-- Optional mutiprocessing, when there will be more checkers
 - More slash commands and REST options
+- Customisable checker (get response from server, parse it in some way, figure out the status)
+- Optional mutiprocessing, when there will be more checkers
 - Tests

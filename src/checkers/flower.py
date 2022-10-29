@@ -8,20 +8,28 @@ from util import aio_requests, messages
 
 _ENDPOINTS = {
     'flower': 'flower/api',
-    'queues': '/queues',
-    'length': '/length'
+    'queues': '/queues/length',
+    'workers': '/workers'
 }
 
 class FlowerChecker(Checker):
     name = 'flower'
 
-    def __init__(self, user: str, password: str, *args, **kwargs):
+    def __init__(self,
+        user: str,
+        password: str,
+        options: dict = settings.CHECKERS['flower'].get('options', {}),
+        *args,
+        **kwargs
+        ):
         self.user = user
         self.password = password
-        self.options: dict = settings.CHECKERS['flower'].get('options')
-        if not self.options:
+        self.options = options
+        if not self.options or not ('queues' in self.options or 'workers' in self.options):
             raise settings.SettingsError(f'No options defined for {self.name} checker')
-        super().__init__(*args, **kwargs)    
+        if (queues := self.options.get('queues')) and not queues.get('messages_threshold'):
+            raise settings.SettingsError(f'No messages_threshold for queues defined for {self.name} checker')
+        super().__init__(*args, **kwargs)
 
     async def check(self) -> dict:
         try:
@@ -31,10 +39,8 @@ class FlowerChecker(Checker):
             status = False
             message = messages.prepare_error_message(self, e)
         else:
-            self._parse_data()
-            status = all(map(lambda queue: queue['is_normal'], self.data['queues']))
+            status = self._parse_data()
             message = self._prepare_message()
-
         self.result = {
             'host': self.host,
             'status': status,
@@ -42,29 +48,86 @@ class FlowerChecker(Checker):
         }
         return self.result
 
+    @classmethod
+    async def check_queues(cls, hosts: list[str] | None = None) -> list[dict]:
+        hosts_to_check = cls._parse_hosts(hosts)
+        default_options: dict = settings.CHECKERS['flower'].get('options', {})
+        options = {}
+        if 'queues' in default_options:
+            options['queues'] = default_options['queues']
+        tasks = (cls(
+            host=host,
+            include_normal=True,
+            options=options,
+            **params
+        ).check() for host, params in hosts_to_check.items())
+        return await asyncio.gather(*tasks)
+
+    @classmethod
+    async def check_workers(cls, hosts: list[str] | None = None) -> list[dict]:
+        hosts_to_check = cls._parse_hosts(hosts)
+        default_options: dict = settings.CHECKERS['flower'].get('options', {})
+        options = {}
+        if 'workers' in default_options:
+            options['workers'] = default_options['workers']
+        tasks = (cls(
+            host=host,
+            include_normal=True,
+            options=options,
+            **params
+        ).check() for host, params in hosts_to_check.items())
+        return await asyncio.gather(*tasks)
+
     async def _get_data(self):
-        self.response = await aio_requests.get(
-            self.url + _ENDPOINTS['flower'] + _ENDPOINTS['queues'] + _ENDPOINTS['length'],
+        tasks = []
+        if 'queues' in self.options:
+            tasks.append(self._get_queues())
+        if 'workers' in self.options:
+            tasks.append(self._get_workers())
+        await asyncio.gather(*tasks)
+
+    async def _get_queues(self):
+        self._queues_response = await self._flower_request(_ENDPOINTS['queues'])
+
+    async def _get_workers(self):
+        self._workers_response = await self._flower_request(_ENDPOINTS['workers'], params={'status': 'true'})
+
+    async def _flower_request(self, endpoint: str, params: dict | None = None):
+        return await aio_requests.get(
+            self.url + _ENDPOINTS['flower'] + endpoint,
+            params=params,
             auth=aiohttp.BasicAuth(self.user, self.password)
         )
 
-    def _parse_data(self):
+    def _parse_data(self) -> bool:
         self.data = {
-            'queues': []
+            'queues': [],
+            'workers': []
         }
-        for queue in self.response['active_queues']:
-            queue['is_normal'] = self._is_queue_normal(queue)
-            self.data['queues'].append(queue)
+        if hasattr(self, '_queues_response'):
+            for queue in self._queues_response['active_queues']:
+                queue['is_normal'] = self._is_queue_normal(queue)
+                self.data['queues'].append(queue)
+        if hasattr(self, '_workers_response'):
+            for worker, status in self._workers_response.items():
+                self.data['workers'].append({'name': worker, 'is_normal': status})
+        return all(map(lambda i: i['is_normal'], self.data['queues'] + self.data['workers']))
 
     def _is_queue_normal(self, queue:dict) -> bool:
         return queue['messages'] < self.options['queues']['messages_threshold']
 
     def _prepare_message(self) -> str:
-        queue_states = []
+        sub_messages = []
+        for worker in self.data['workers']:
+            if not self.include_normal and worker['is_normal']:
+                continue
+            _worker = f"Worker: {worker['name']}"
+            _status = f"Status: {'Up' if worker['is_normal'] else 'Down'}"
+            sub_messages.append('\n'.join((_worker, _status)))
         for queue in self.data['queues']:
             if not self.include_normal and queue['is_normal']:
                 continue
             _queue = f"Queue: {queue['name']}"
             _messages = f"Messages: {queue['messages']}"
-            queue_states.append('\n'.join((_queue, _messages)))
-        return self._message_header + '\n'.join(queue_states)
+            sub_messages.append('\n'.join((_queue, _messages)))
+        return self._message_header + '\n'.join(sub_messages)

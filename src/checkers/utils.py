@@ -26,7 +26,7 @@ def get_loaded_checkers() -> tuple[Checker]:
 
 async def full_check():
     """Run all checks from settings.CHECKERS. Alert through handlers."""
-    await asyncio.gather(*(checker.run() for checker in get_loaded_checkers()))
+    return await asyncio.gather(*(checker.check() for checker in get_loaded_checkers()))
 
 async def monitor():
     """Start full monitoring"""

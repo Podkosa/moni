@@ -19,6 +19,7 @@ checkers:
     options:
       queues:
         messages_threshold: 100     # Alert if queue size is greater or equal
+      workers:                      # Alert if worker is down
   ping:                             # Ping endpoint/slash command can also handle unknown hosts
     servers:
       host1.com:

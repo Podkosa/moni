@@ -80,6 +80,13 @@ class Checker(ABC):
 
     @classmethod
     async def check_hosts(cls, hosts: list[str] | None = None) -> list[dict]:
+        hosts_to_check = cls._parse_hosts(hosts)
+        tasks = (cls(host=host, include_normal=True, **params).check() for host, params in hosts_to_check.items())
+        return await asyncio.gather(*tasks)
+
+    @classmethod
+    def _parse_hosts(cls, hosts: list[str] | None = None) -> dict:
+        """Verify that all hosts are defined in settings"""
         servers = settings.CHECKERS.get(cls.name, {}).get('servers')
         if not servers:
             raise HTTPException(500, f"{cls.name.capitalize()}Checker doesn't have any servers")
@@ -91,8 +98,8 @@ class Checker(ABC):
                 raise HTTPException(400, f'Unknown host {e.args[0]}')
         else:
             hosts_to_check = servers
-        tasks = (cls(host=host, include_normal=True, **params).check() for host, params in hosts_to_check.items())
-        return await asyncio.gather(*tasks)
+
+        return hosts_to_check
 
     @classmethod
     def extract_unknown_hosts(cls, hosts: list[str]) -> tuple[list[str], list[str]]:
