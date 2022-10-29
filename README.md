@@ -52,7 +52,9 @@ Slack: alerts to channels and slash commands. Install Moni in your Workspace wit
 - Slack timeout for /commands is 3 seconds. Refactor to delay the response.
 - Slack button on an alert to open up related service
 - Web interface for settings and checks
-- Endpoint/slash command to show loaded checkers and handlers
+- Endpoint to show loaded checkers and handlers
+- Endpoint to add servers to monitoring, turn on/off already configured ones
+- Flower failed tasks alert?
 - More alert handlers
 - More server checkers
 - More slash commands and REST options
