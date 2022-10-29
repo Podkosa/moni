@@ -8,17 +8,17 @@
 
 - :robot: Bot: HTTP-server for on-demand checks
 - :dog: Watchdog: Compact daemon for monitoing and alerting
-- :mag: Checkers: Ping, Celery/Flower (workers status and queues size)  (working on more)
+- :mag: Checkers: Ping, Celery/Flower (working on more)
 - :loudspeaker: Handlers: Slack, Log, File
 - :speech_balloon: Slack integration
 - :fire: Speed: Async requests, Python 3.11, uvloop and FastAPI ensure the max gauge of your *Python* 
 speedometer
-- :hibiscus: Settings: Declarative YAML settings
+- :hibiscus: Settings: Declarative YAML. Fine tune to your liking or fire-and-forget.
 - :notebook: Docs: Interactive docs at /docs
 
 **Bot:**
 
-HTTP server, handling incoming requests (REST, slash commands, integrations, webhooks etc.). Can check on-demand and return the results or launch a full check in the background with standard alerts.
+HTTP server, handling incoming requests (REST, slash commands, integrations, webhooks etc.). On-demand checks.
 
 **Watchdog:**
 
@@ -26,10 +26,10 @@ Periodically monitors servers with Checkers and alerts through Handlers.
 Can be run in two ways:
 
 1) Integrated (default).
-Watchdog will launch inside the bot async event loop. *Keep in mind thath they both will share a single thread, therefore can impact performance and even block one another.*
+Launch inside the bot async event loop. *Keep in mind thath they both will share a single thread, therefore can impact performance and even block one another.*
 More compact option, but not fit for scaling.
 2) Standalone.
-You can run ./watchdog.py as a separate process/container, even without the bot.
+Run ./watchdog.py as a separate process/container, even without the bot.
 3) Disabled.
 You can turn off the watchdog completely and run checks from the bot at your own pace.
 
@@ -41,7 +41,7 @@ If you're deploying inside a container (e.g. Docker Compose), be sure to mount `
 
 **Integrations:**
 
-Slack: alerts to channels and slash commands. See `./integrations_docs/slack_app_manifest.yml`.
+Slack: alerts to channels and slash commands. Install Moni in your Workspace with `./integrations_docs/slack_app_manifest.yml`.
 
 **TODO:**
 
