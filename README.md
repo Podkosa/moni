@@ -47,6 +47,7 @@ If you're deploying inside a container (e.g. Docker Compose), be sure to mount `
 - File, email handler
 - Remember previous alerts for subsequent checks, "back to normal" optional messages
 - Alert when X is not normal for more than N time
+- Slack timeout for /commands is 3 seconds. Refactor to delay the response.
 - Slack app distribution or manifest
 - More alert handlers
 - More server checkers
