@@ -2,11 +2,12 @@ services:
   moni:
     build: .
     working_dir: /moni
-    command: uvicorn bot.main:app --host 0.0.0.0 --port 80
+    command: uvicorn bot:app --host 0.0.0.0 --port 80
     ports: 
       - "6767:80"
     volumes:
     - './settings.yml:/moni/settings.yml'
+    # - './logs/:/moni/logs'                            # If you plan logging to file
 
   # moni_watchdog:
   #   build: .
@@ -14,3 +15,4 @@ services:
   #   command: ./watchdog.py
   #   volumes:
   #   - './settings.yml:/moni/settings.yml'
+  #  # - './logs/:/moni/logs'

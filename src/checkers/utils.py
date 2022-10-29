@@ -22,14 +22,12 @@ def get_loaded_checkers() -> tuple[Checker]:
                 checkers.__loaded_checkers__.append(checker)
     return tuple(checkers.__loaded_checkers__)
 
-async def check_all():
+async def full_check():
     """Run all checks from settings.CHECKERS. Alert through handlers."""
-    async with asyncio.TaskGroup() as tg:
-        for checker in get_loaded_checkers():
-            tg.create_task(checker.run())
+    await asyncio.gather(*(checker.run() for checker in get_loaded_checkers()))
 
 async def monitor():
     """Start full monitoring"""
-    async with asyncio.TaskGroup() as tg:
-        for checker in get_loaded_checkers():
-            tg.create_task(checker.monitor())
+    await asyncio.gather(*(checker.monitor() for checker in get_loaded_checkers()))
+    # As of 29.10.2022 `async with asyncio.TaskGroup` doesn't seem to be working when Watchdog is started as a script.
+    # Never get's to execute anything from the `async with` body. Possible Python 3.11 bug, further investigation required.

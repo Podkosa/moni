@@ -6,14 +6,15 @@
 
 **Current features:**
 
-- Bot (HTTP-server) for on-demand checks
-- Autonomous compact watchdog for monitoing and alerting
-- Slack integration: alerts to channel and slash commands
-- Checks: Celery broker queues size (through Flower API) (working on more)
-- Speed: Asynchronous requests, Python 3.11, uvloop and FastAPI ensure the max gauge of your *Python* 
+- :robot: Bot: HTTP-server for on-demand checks
+- :dog: Watchdog: Compact daemon for monitoing and alerting
+- :mag: Checkers: Ping, Flower/Celery (currently only queues size) (working on more)
+- :loudspeaker: Handlers: Slack, Log, File
+- :speech_balloon: Slack integration: slash commands and alerts to channel
+- :fire: Speed: Async requests, Python 3.11, uvloop and FastAPI ensure the max gauge of your *Python* 
 speedometer
-- Declarative YAML settings
-- Interactive docs at /docs
+- :hibiscus: Settings: Declarative YAML settings
+- :notebook: Docs: Interactive docs at /docs
 
 **Bot:**
 
@@ -51,4 +52,5 @@ If you're deploying inside a container (e.g. Docker Compose), be sure to mount `
 - More server checkers
 - Optional mutiprocessing, when there will be more checkers
 - More slash commands and REST options
+- Validate settings on startup
 - Tests

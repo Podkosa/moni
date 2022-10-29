@@ -1,5 +1,4 @@
 import aiohttp, asyncio
-from fastapi import HTTPException
 
 from conf import settings
 from conf.settings import logger
@@ -7,19 +6,26 @@ from .abstract import Checker
 from util import aio_requests, messages
 
 
+_ENDPOINTS = {
+    'flower': 'flower/api',
+    'queues': '/queues',
+    'length': '/length'
+}
+
 class FlowerChecker(Checker):
-    options: dict = settings.CHECKERS['flower']['options']
+    name = 'flower'
 
     def __init__(self, user: str, password: str, *args, **kwargs):
         self.user = user
         self.password = password
+        self.options: dict = settings.CHECKERS['flower']['options']
         super().__init__(*args, **kwargs)    
 
     async def check(self) -> dict:
         try:
             await self._get_data()
         except (aiohttp.ClientError, asyncio.TimeoutError) as e:
-            logger.warning(f"Couldn't check Flower on host {self.host}", exc_info=e)
+            logger.warning(f"Couldn't check Flower on {self.host}: {e}")
             status = False
             message = messages.prepare_error_message(e)
         else:
@@ -36,7 +42,7 @@ class FlowerChecker(Checker):
 
     async def _get_data(self):
         self.response = await aio_requests.get(
-            f'https://{self.host}{self.port if self.port else ""}/flower/api/queues/length',
+            self.url + _ENDPOINTS['flower'] + _ENDPOINTS['queues'] + _ENDPOINTS['length'],
             auth=aiohttp.BasicAuth(self.user, self.password)
         )
 
@@ -56,25 +62,7 @@ class FlowerChecker(Checker):
         for queue in self.data['queues']:
             if not self.include_normal and queue['is_normal']:
                 continue
-            _host = f"Host: {self.host}"
             _queue = f"Queue: {queue['name']}"
             _messages = f"Messages: {queue['messages']}"
-            queue_states.append('\n'.join((_host, _queue, _messages)))
-        return '\n\n'.join(queue_states)
-
-    @classmethod
-    async def check_hosts(cls, hosts: list[str] | None = None) -> list[dict]:
-        servers = settings.CHECKERS.get('flower', {}).get('servers')
-        if not servers:
-            raise HTTPException(500, 'Flower checker is not properly configured')
-
-        if hosts:
-            try:
-                hosts_to_check = {host: servers.pop(host) for host in hosts}
-            except KeyError as e:
-                raise HTTPException(400, f'Unknown host {e.args[0]}')
-        else:
-            hosts_to_check = servers
-
-        tasks = (cls(host=host, include_normal=True, **params).check() for host, params in hosts_to_check.items())
-        return await asyncio.gather(*tasks)
+            queue_states.append('\n'.join((_queue, _messages)))
+        return self._message_header + '\n'.join(queue_states)

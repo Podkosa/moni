@@ -1,37 +1,46 @@
 api_key: key                      # Access to all bot endpoints. Send it as `access_token` in header/cookie/query_param with your requests.
+
 checkers:
   flower:
-    default:                      # Default values for servers
+    default:                        # Default values for servers
       handlers: [slack]
       cycle: 50
       user: user1
       password: password1
-    servers:                      # Server settings can be set, in lookup order, on Server, Checker (per-checker default) or Watchdog (global default) level.
+    servers:                        # Server settings can be set, in lookup order, on Server, Checker (per-checker default) or Watchdog (global default) level.
       host1.com:
       host2.com:
         user: user2
         password: password2
-        port: 1111                # 443 HTTPS if not speciied
+        port: 1111
       host3.com:
         handlers: [log]
         cycle: 30
     options:
       queues:
-        messages_threshold: 100   # Alert if queue size is greater or equal
+        messages_threshold: 100     # Alert if queue size is greater or equal
+  ping:
+    servers:
+      host1.com:
+        endpoint: /path/to/ping/
 
 handlers:
-  log:
+  log:                              # STDOUT
+  file:                             # Write to ./logs/filename. No rotation implemented yet.
+    filename: moni.log
   slack:
     webhook_url: https://hooks.slack.com/services/...
 
-request_timeout: 10               # Default timeout for all outgoing requests
-
 watchdog:
-  integrated: true                # Start Watchdog inside Bot async event loop.
-  default:                        # Global default values
+  integrated: true                  # Start Watchdog inside Bot async event loop.
+  default:                          # Global default values
     cycle: 300
     handlers: [log]
+    protocol: 'https'               # Protocol for checkers requests
 
 integrations:
   slack:
     signing_secret: signing_secret
+
+# request_timeout: 10               # Default timeout for all outgoing requests.
+# dttm_format: '%Y-%m-%d %H:%M:%S'  # Datetime format   https://docs.python.org/3/library/datetime.html#strftime-and-strptime-format-codes

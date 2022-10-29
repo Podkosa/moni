@@ -7,9 +7,9 @@ router = APIRouter(prefix='/check')
 
 
 @router.post('/all/')
-async def check_all():
+async def full_check():
     #TODO: optionally run in the background
-    await checkers.check_all()
+    await checkers.full_check()
 
 @router.get('/queues/')
 async def queues(hosts: list[str] | None = None) -> list[dict]:

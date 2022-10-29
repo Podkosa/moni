@@ -1,8 +1,10 @@
 from abc import ABC, abstractmethod
-
-import asyncio
 from typing import Coroutine
 
+import asyncio
+from fastapi import HTTPException
+
+from conf import settings
 from conf.settings import logger
 from handlers.abstract import Handler
 
@@ -13,20 +15,24 @@ class CheckerError(Exception):
 
 class Checker(ABC):
     """
-    Base checker class. An instance represents a single server.
+    Base class for checkers. An instance represents a single server.
     Knows how to run, check and alert itself, start periodic monitoring.
     """
+    name = ''
+
     def __init__(
         self, host: str,
         port: int | None = None,
         handlers: list[Handler] = [],
         cycle: int | float | None = None,
+        protocol: str = 'https',
         include_normal: bool = False    # Alert regardless of status
         ):
         self.host = host
         self.port = port
         self.handlers = handlers
         self.cycle = cycle
+        self.protocol = protocol
         self.include_normal = include_normal
 
     def __str__(self):
@@ -35,14 +41,12 @@ class Checker(ABC):
     async def run(self):
         """Run a check, store results, alert if something is not normal."""
         self.result = await self.check()
-        if not self.result['status'] or self.include_normal:
+        if self.include_normal or not self.result['status']:
             await self.alert(self.result['message'])
 
     async def alert(self, message: str):
         """Send message through handlers"""
-        async with asyncio.TaskGroup() as tg:
-            for handler in self.handlers:
-                tg.create_task(handler.handle(message))
+        await asyncio.gather(*(handler.handle(message) for handler in self.handlers))
 
     @abstractmethod
     async def check(self) -> dict:
@@ -57,11 +61,36 @@ class Checker(ABC):
         if not self.handlers or not self.cycle:
             raise CheckerError(f'Trying to start {self} monitoring without handlers or cycle defined.')
         while True:
-            logger.info(f'Running {self}')
+            logger.debug(f'Running {self}')
             try:
                 await self.run()
             except:
                 logger.exception(f'Exception during the monitoring {self}')
             else:
-                logger.info(f'Finished {self}')
+                logger.debug(f'Finished {self}')
             await asyncio.sleep(self.cycle)  # type: ignore
+
+    @classmethod
+    async def check_hosts(cls, hosts: list[str] | None = None) -> list[dict]:
+        servers = settings.CHECKERS.get(cls.name, {}).get('servers')
+        if not servers:
+            raise HTTPException(500, f"{cls.name.capitalize()}Checker doesn't have any servers")
+
+        if hosts:
+            try:
+                hosts_to_check = {host: servers.pop(host) for host in hosts}
+            except KeyError as e:
+                raise HTTPException(400, f'Unknown host {e.args[0]}')
+        else:
+            hosts_to_check = servers
+
+        tasks = (cls(host=host, include_normal=True, **params).check() for host, params in hosts_to_check.items())
+        return await asyncio.gather(*tasks)
+
+    @property
+    def url(self):
+        return f'{self.protocol}://{self.host}{self.port if self.port else ""}/'
+
+    @property
+    def _message_header(self):
+        return f'Host: {self.host}\n'

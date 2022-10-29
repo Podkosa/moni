@@ -21,6 +21,8 @@ async def request(method, url, **kwargs) -> Any:
                     return await resp.text()
                 case 'bytes':
                     return await resp.read()
+                case 'status':
+                    return resp.status
                 case 'ignore':
                     return
                 case _:
