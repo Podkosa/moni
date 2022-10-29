@@ -1,5 +1,3 @@
-import asyncio
-
 from fastapi import APIRouter, Query
 
 import checkers
@@ -9,7 +7,8 @@ router = APIRouter(prefix='/check')
 
 
 @router.post('/full_check/')
-async def full_check():
+async def full_check(hosts: list[str] | None = Query(default=None)) -> list[dict]:
+    #TODO: implement per host check
     return await checkers.full_check()
 
 @router.get('/ping/')
