@@ -44,7 +44,7 @@ If you're deploying inside a container (e.g. Docker Compose), be sure to mount `
 - Telegram integration
 - Health/heartbeat/pings checker
 - Customisable checker (get response from server, parse it in some way, figure out the status)
-- File, email handler
+- Email handler
 - Remember previous alerts for subsequent checks, "back to normal" optional messages
 - Alert when X is not normal for more than N time
 - Slack timeout for /commands is 3 seconds. Refactor to delay the response.
@@ -53,5 +53,4 @@ If you're deploying inside a container (e.g. Docker Compose), be sure to mount `
 - More server checkers
 - Optional mutiprocessing, when there will be more checkers
 - More slash commands and REST options
-- Validate settings on startup
 - Tests
