@@ -50,6 +50,7 @@ Slack: alerts to channels and slash commands. Install Moni in your Workspace wit
 - Remember previous alerts for subsequent checks, "back to normal" optional messages
 - Alert when X is not normal for more than N time
 - Slack timeout for /commands is 3 seconds. Refactor to delay the response.
+- Web interface for settings and checks
 - More alert handlers
 - More server checkers
 - More slash commands and REST options
