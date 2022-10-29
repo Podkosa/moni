@@ -8,7 +8,7 @@ from web.endpoints import check
 
 async def process_request(request: Request) -> Any:
     data = await request.form()
-    command: str = data['command']  # type: ignore
+    command: str = data['command'].removeprefix('/')  # type: ignore
     text: str = data.get('text')  # type: ignore
     arguments = text.split(' ') if text else None
     if endpoint := getattr(check, command, None):
