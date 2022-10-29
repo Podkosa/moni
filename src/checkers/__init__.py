@@ -3,4 +3,4 @@ from .ping import PingChecker
 from .utils import get_loaded_checkers, full_check, monitor
 from .abstract import CheckerError
 
-__loaded_checkers__ = [] # keep a cached list of all the Checkers parsed from settings
+__loaded_checkers__ = tuple() # keep a cached list of all the Checkers parsed from settings
