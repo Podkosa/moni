@@ -16,7 +16,7 @@ def get_loaded_checkers() -> tuple[Checker]:
         checkers.__loaded_checkers__ = tuple(get_checkers_from_settings())
     return checkers.__loaded_checkers__
 
-def get_checkers_from_settings(**kwargs) -> list[Checker]:
+def get_checkers_from_settings(include_handlers=True, **kwargs) -> list[Checker]:
     _checkers = []
     for checker_name, conf in settings.CHECKERS.items():
         Checker_cls = get_checker_cls(checker_name)
@@ -24,9 +24,10 @@ def get_checkers_from_settings(**kwargs) -> list[Checker]:
         params: dict
         for server, params in conf['servers'].items():
             handler_names = params.pop('handlers')
-            if not handler_names:
-                raise settings.SettingsError(f'No handlers defined for {checker_name} checker')
-            params['handlers'] = [handlers.get_handler_cls(handler_name)() for handler_name in handler_names]
+            if include_handlers:
+                if not handler_names:
+                    raise settings.SettingsError(f'No handlers defined for {checker_name} checker')
+                params['handlers'] = [handlers.get_handler_cls(handler_name)() for handler_name in handler_names]
             params.update(kwargs)
             checker = Checker_cls(host=server, **params)
             _checkers.append(checker)
@@ -40,5 +41,5 @@ async def monitor():
 
 async def full_check():
     """Run all checks from settings.CHECKERS"""
-    _checkers = get_checkers_from_settings(include_normal=True)
+    _checkers = get_checkers_from_settings(include_handlers=False, include_normal=True)
     return await asyncio.gather(*(checker.check() for checker in _checkers))
