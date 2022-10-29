@@ -18,4 +18,5 @@ async def set_up():
 
 @app.get('/ping')
 def ping() -> str:
+    """Basic bot healthcheck. Not to be confused with PingChecker for servers."""
     return 'Pong!'
