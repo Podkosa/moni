@@ -23,6 +23,7 @@ def get_checkers_from_settings(include_handlers=True, **kwargs) -> list[Checker]
         server: str
         params: dict
         for server, params in conf['servers'].items():
+            params = params.copy()
             handler_names = params.pop('handlers')
             if include_handlers:
                 if not handler_names:
