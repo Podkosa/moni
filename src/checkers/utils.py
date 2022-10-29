@@ -7,7 +7,7 @@ from checkers.abstract import Checker
 
 def get_checker_cls(checker_name: str) -> type[Checker]:
     if checker_name not in settings.CHECKERS:
-        raise ValueError(f'Checker {checker_name} is not defined in settings')
+        raise settings.SettingsError(f'Checker {checker_name} is not defined in settings')
     return getattr(checkers, f'{checker_name.capitalize()}Checker')
 
 def get_loaded_checkers() -> tuple[Checker]:
