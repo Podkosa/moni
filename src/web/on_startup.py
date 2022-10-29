@@ -14,5 +14,5 @@ def verify_settings():
 
 async def set_up():
     verify_settings()
-    if settings.WATCHDOG['integrated']:
+    if settings.WATCHDOG.get('integrated'):
         asyncio.create_task(watchdog.watch())

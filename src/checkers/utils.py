@@ -16,7 +16,9 @@ def get_loaded_checkers() -> tuple[Checker]:
         for checker_name, conf in settings.CHECKERS.items():
             Checker_cls = get_checker_cls(checker_name)
             for server, params in conf['servers'].items():
-                handler_names = params.pop('handlers', [])
+                handler_names = params.pop('handlers')
+                if not handler_names:
+                    raise settings.SettingsError(f'No handlers defined for {checker_name} checker')
                 params['handlers'] = [handlers.get_handler_cls(handler_name)() for handler_name in handler_names]
                 checker = Checker_cls(host=server, **params)
                 checkers.__loaded_checkers__.append(checker)

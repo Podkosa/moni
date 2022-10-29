@@ -18,7 +18,9 @@ class FlowerChecker(Checker):
     def __init__(self, user: str, password: str, *args, **kwargs):
         self.user = user
         self.password = password
-        self.options: dict = settings.CHECKERS['flower']['options']
+        self.options: dict = settings.CHECKERS['flower'].get('options')
+        if not self.options:
+            raise settings.SettingsError(f'No options defined for {self.name} checker')
         super().__init__(*args, **kwargs)    
 
     async def check(self) -> dict:
