@@ -38,6 +38,14 @@ class Checker(ABC):
     def __str__(self):
         return f'{self.__class__.__name__}({self.host})'
 
+    @property
+    def url(self):
+        return f'{self.protocol}://{self.host}{self.port if self.port else ""}/'
+
+    @property
+    def _message_header(self):
+        return f'Host: {self.host}\n'
+
     async def run(self):
         """Run a check, store results, alert if something is not normal."""
         self.result = await self.check()
@@ -78,19 +86,22 @@ class Checker(ABC):
 
         if hosts:
             try:
-                hosts_to_check = {host: servers.pop(host) for host in hosts}
+                hosts_to_check = {host: servers[host] for host in hosts}
             except KeyError as e:
                 raise HTTPException(400, f'Unknown host {e.args[0]}')
         else:
             hosts_to_check = servers
-
         tasks = (cls(host=host, include_normal=True, **params).check() for host, params in hosts_to_check.items())
         return await asyncio.gather(*tasks)
 
-    @property
-    def url(self):
-        return f'{self.protocol}://{self.host}{self.port if self.port else ""}/'
-
-    @property
-    def _message_header(self):
-        return f'Host: {self.host}\n'
+    @classmethod
+    def extract_unknown_hosts(cls, hosts: list[str]) -> tuple[list[str], list[str]]:
+        servers = settings.CHECKERS.get(cls.name, {}).get('servers', {})
+        known_hosts = []
+        unknown_hosts = []
+        for host in hosts:
+            if host in servers:
+                known_hosts.append(host)
+            else:
+                unknown_hosts.append(host)
+        return known_hosts, unknown_hosts

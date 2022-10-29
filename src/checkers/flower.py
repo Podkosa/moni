@@ -25,9 +25,9 @@ class FlowerChecker(Checker):
         try:
             await self._get_data()
         except (aiohttp.ClientError, asyncio.TimeoutError) as e:
-            logger.warning(f"Couldn't check Flower on {self.host}: {e}")
+            logger.debug(f"Couldn't check Flower on {self.host}: {e.__class__.__name__} {str(e)}")
             status = False
-            message = messages.prepare_error_message(e)
+            message = messages.prepare_error_message(self, e)
         else:
             self._parse_data()
             status = all(map(lambda queue: queue['is_normal'], self.data['queues']))
