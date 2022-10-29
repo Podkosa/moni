@@ -3,19 +3,19 @@ from typing import Any
 from fastapi import Request, HTTPException
 from starlette.status import HTTP_400_BAD_REQUEST
 
-import checkers
+from web.endpoints import check
 
 
 async def process_request(request: Request) -> Any:
     data = await request.form()
-    text = data.get('text')
-    arguments = text.split(' ') if text else None  # type: ignore
-    match data['command']:
-        case '/queues':
-            results = await checkers.FlowerChecker.check_hosts(arguments)
-        case _:
-            raise HTTPException(status_code=HTTP_400_BAD_REQUEST, detail='Unknown command')
-    return prepare_response(results)
+    command: str = data['command']  # type: ignore
+    text: str = data.get('text')  # type: ignore
+    arguments = text.split(' ') if text else None
+    if endpoint := getattr(check, command, None):
+        results = await endpoint(arguments)
+        return prepare_response(results)
+    else:
+        raise HTTPException(status_code=HTTP_400_BAD_REQUEST, detail='Unknown command')
 
 def prepare_response(results: list[dict]) -> dict:
     response = {

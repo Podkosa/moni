@@ -8,5 +8,5 @@ router = APIRouter(prefix='/slack', dependencies=[Depends(auth.slack_signing_sec
 
 @router.post('/')
 async def slack_request(request: Request):
-    """Main slack endpoint"""
+    """Main slack endpoint. Slash commands map to endpoints in web.endpoints.check."""
     return await main.process_request(request)

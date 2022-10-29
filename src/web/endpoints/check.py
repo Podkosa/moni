@@ -15,3 +15,8 @@ async def full_check():
 async def queues(hosts: list[str] | None = None) -> list[dict]:
     """Current queues size"""
     return await checkers.FlowerChecker.check_hosts(hosts)
+
+@router.get('/ping/')
+async def ping(hosts: list[str] | None = None) -> list[dict]:
+    """Current queues size"""
+    return await checkers.PingChecker.check_hosts(hosts)
