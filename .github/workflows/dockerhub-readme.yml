@@ -1,0 +1,10 @@
+on:
+  push:
+    branches:
+    - main
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Dockerhub Readme
+      uses: ms-jpq/sync-dockerhub-readme@v1
