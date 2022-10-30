@@ -1,5 +1,7 @@
+# Moni
+
 <p align="center">
-<img src="https://repository-images.githubusercontent.com/557768275/6a8a5d08-dc4f-4c19-9466-024af5c4d828">
+<a href="https://podkosa.github.io/moni/"><img src="https://repository-images.githubusercontent.com/557768275/6a8a5d08-dc4f-4c19-9466-024af5c4d828"></a>
 <br>
 <em>a monitoring bot for your servers</em>
 </p>
@@ -17,11 +19,11 @@ speedometer
 - :whale2: Docker: Pull the latest image from <a href="https://hub.docker.com/repository/docker/podkosa/moni" title="DockerHub">podkosa/moni</a>
 - :notebook: Docs: Interactive docs at /docs
 
-**Bot:**
+## Bot
 
 HTTP server, handling incoming requests (REST, slash commands, integrations, webhooks etc.). On-demand checks.
 
-**Watchdog:**
+## Watchdog
 
 Periodically monitors servers with Checkers and alerts through Handlers.
 Can be run in two ways:
@@ -34,17 +36,17 @@ Run ./watchdog.py as a separate process/container, even without the bot.
 3) Disabled.
 You can turn off the watchdog completely and run checks from the bot at your own pace.
 
-**Settings:**
+## Settings
 
 Define your servers, handlers, integrations and other settings declaratively in `settings.yml`. See `example.settings.yml`.
 This file will include your sensetive data, so be sure to take security measures.
 If you're deploying inside a container (e.g. Docker Compose), be sure to mount `./settings.yml:/botapp/settings.yml` through `volumes`.
 
-**Integrations:**
+## Integrations
 
 Slack: alerts to channels and slash commands. Install Moni in your Workspace with `./integrations_docs/slack_app_manifest.yml`.
 
-**TODO:**
+## TODO
 
 - Telegram integration
 - Email handler
