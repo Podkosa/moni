@@ -1,5 +1,4 @@
 import pathlib
-from datetime import datetime
 
 import aiofiles
 
@@ -9,16 +8,16 @@ from util.messages import timestamp, flatten
 from .abstract import Handler
 
 
-class LogHandler(Handler):
+class ConsoleHandler(Handler):
     async def _send_message(self, message: str):
         final_message = f"{timestamp()} {flatten(message)}"
         logger.info(final_message)
 
-class FileHandler(Handler):
+class LogHandler(Handler):
     def __init__(self):
         self.dir: pathlib.Path = settings.WORK_DIR / 'logs'
         self.dir.mkdir(exist_ok=True)
-        self.path: pathlib.Path = self.dir  / settings.HANDLERS['file']['filename']
+        self.path: pathlib.Path = self.dir  / settings.HANDLERS['log']['filename']
 
     async def _send_message(self, message: str):
         final_message = f"{timestamp()} {flatten(message)}\n"

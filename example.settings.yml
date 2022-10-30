@@ -26,8 +26,8 @@ checkers:
         endpoint: /path/to/ping/
 
 handlers:
-  log:                              # STDOUT
-  file:                             # Write to ./logs/filename. No rotation implemented yet.
+  console:                              # STDOUT
+  log:                             # Write to ./logs/filename. No rotation implemented yet.
     filename: moni.log
   slack:
     webhook_url: https://hooks.slack.com/services/...
@@ -36,7 +36,7 @@ watchdog:
   integrated: true                  # Start Watchdog inside Bot async event loop.
   default:                          # Global default values
     cycle: 300
-    handlers: [log]
+    handlers: [console]
     protocol: 'https'               # Protocol for checkers requests
 
 integrations:

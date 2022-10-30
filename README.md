@@ -9,7 +9,7 @@
 - :robot: Bot: HTTP-server for on-demand checks
 - :dog: Watchdog: Compact daemon for monitoing and alerting
 - :mag: Checkers: Ping, Celery/Flower (working on more)
-- :loudspeaker: Handlers: Slack, Log, File
+- :loudspeaker: Handlers: Slack, Log, Console
 - :speech_balloon: Slack integration
 - :fire: Speed: Async requests, Python 3.11, uvloop and FastAPI ensure the max gauge of your *Python* 
 speedometer
