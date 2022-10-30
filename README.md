@@ -8,12 +8,13 @@
 
 - :robot: Bot: HTTP-server for on-demand checks
 - :dog: Watchdog: Compact daemon for monitoing and alerting
-- :mag: Checkers: Ping, Celery/Flower (working on more)
-- :loudspeaker: Handlers: Slack, Log, Console
+- :mag: Checkers: Ping, Celery/Flower
+- :loudspeaker: Handlers: Slack, Webhook, Log, Console
 - :speech_balloon: Slack integration
 - :fire: Speed: Async requests, Python 3.11, uvloop and FastAPI ensure the max gauge of your *Python* 
 speedometer
 - :hibiscus: Settings: Declarative YAML. Fine tune to your liking or fire-and-forget.
+- :whale2: Docker: Pull the latest image from <a href="https://hub.docker.com/repository/docker/podkosa/moni" title="DockerHub">podkosa/moni</a>
 - :notebook: Docs: Interactive docs at /docs
 
 **Bot:**
