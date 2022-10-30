@@ -8,3 +8,8 @@ jobs:
     steps:
     - name: Dockerhub Readme
       uses: ms-jpq/sync-dockerhub-readme@v1
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_KEY }}
+        repository: podkosa/moni
+        readme: "./README.md"
