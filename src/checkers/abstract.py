@@ -50,11 +50,11 @@ class Checker(ABC):
         """Run a check, store results, alert if something is not normal."""
         self.result = await self.check()
         if self.include_normal or not self.result['status']:
-            await self.alert(self.result['message'])
+            await self.alert(self.result)
 
-    async def alert(self, message: str):
+    async def alert(self, result: dict):
         """Send message through handlers"""
-        await asyncio.gather(*(handler.handle(message) for handler in self.handlers))
+        await asyncio.gather(*(handler.handle(result) for handler in self.handlers))
 
     @abstractmethod
     async def check(self) -> dict:

@@ -12,12 +12,12 @@ class Handler(ABC):
     def __str__(self):
         return f'{self.__class__.__name__}'
 
-    async def handle(self, message: str):
+    async def handle(self, result: dict):
         try:
-            await self._send_message(message)
+            await self._send_message(result)
         except:
             logger.exception(f'Error sending message through {self}')
 
     @abstractmethod
-    async def _send_message(self, message: str):
+    async def _send_message(self, result: dict):
         ...

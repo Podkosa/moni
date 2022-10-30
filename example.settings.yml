@@ -1,36 +1,50 @@
-api_key: key                      # Access to all bot endpoints. Send it as `access_token` in header/cookie/query_param with your requests.
+api_key: key                        # Access to all bot endpoints. Send it as `access_token` in header/cookie/query_param with your requests.
 
 checkers:
   flower:
+    options:
+      queues:
+        messages_threshold: 100     # Alert if queue size is greater or equal
+      workers:                      # Alert if worker is down
     default:                        # Default values for servers
       handlers: [slack]
       cycle: 50
       user: user1
       password: password1
     servers:                        # Server settings can be set, in lookup order, on Server, Checker (per-checker default) or Watchdog (global default) level.
-      host1.com:
-      host2.com:
+      host1.com:                    # Pull settings from default (checker, watchdog)
+      host2.com:                    # Define/override certain settings for a server
         user: user2
         password: password2
         port: 1111
       host3.com:
         handlers: [log]
         cycle: 30
-    options:
-      queues:
-        messages_threshold: 100     # Alert if queue size is greater or equal
-      workers:                      # Alert if worker is down
+
   ping:                             # Ping endpoint/slash command can also handle unknown hosts
     servers:
       host1.com:
         endpoint: /path/to/ping/
 
-handlers:
-  console:                              # STDOUT
-  log:                             # Write to ./logs/filename. No rotation implemented yet.
+
+handlers:                           # All handlers send per-server check result.
+  console:                          # STDOUT
+
+  log:                              # Write to ./logs/filename. No rotation implemented yet.
     filename: moni.log
-  slack:
+
+  webhook:                          # Send a POST request with check result as json:
+    url: http://your/webhook/url/   #   {"host": str, "status": bool, "message": str}
+    user: user                      # Set any auth/headers/cookies
+    password: password
+    headers:
+      header1: header1
+    cookies:
+      cookie1: cookie1
+
+  slack:                            # Send to a Slack channel
     webhook_url: https://hooks.slack.com/services/...
+
 
 watchdog:
   integrated: true                  # Start Watchdog inside Bot async event loop.
@@ -38,6 +52,7 @@ watchdog:
     cycle: 300
     handlers: [console]
     protocol: 'https'               # Protocol for checkers requests
+
 
 integrations:
   slack:
