@@ -1,8 +1,53 @@
 site_name: Moni
+site_description: a monitoring bot for your servers
 theme:
   name: material
+  logo: assets/mini_logo.png
+  favicon: assets/logo.png
+  icon:
+    repo: fontawesome/brands/github
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: light blue
+      accent: deep orange
+      toggle:
+        icon: material/brightness-7 
+        name: Switch to dark mode
+
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: light blue
+      accent: deep orange
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.instant
+    - navigation.tracking
+plugins:
+  - search
+  - social
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/Podkosa/moni
+    - icon: fontawesome/brands/docker
+      link: https://hub.docker.com/repository/docker/podkosa/moni
+    - icon: fontawesome/brands/telegram
+      link: https://t.me/Podkosa
+    - icon: fontawesome/brands/linkedin
+      link: https://www.linkedin.com/in/artem-podkolzin-661959229/
+
 markdown_extensions:
   - attr_list
   - pymdownx.emoji:
       emoji_index: !!python/name:materialx.emoji.twemoji
       emoji_generator: !!python/name:materialx.emoji.to_svg
+  - pymdownx.highlight:
+      anchor_linenums: true
+      auto_title: true
+  - pymdownx.superfences
+repo_url: https://github.com/Podkosa/moni
+repo_name: podkosa/moni
+edit_uri: ""
