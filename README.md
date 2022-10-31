@@ -1,7 +1,7 @@
 # Moni
 
 <p align="center">
-<a href="https://podkosa.github.io/moni/"><img src="https://repository-images.githubusercontent.com/557768275/6a8a5d08-dc4f-4c19-9466-024af5c4d828"></a>
+<a href="https://podkosa.github.io/moni/" title="Moni Docs"><img src="https://repository-images.githubusercontent.com/557768275/6a8a5d08-dc4f-4c19-9466-024af5c4d828"></a>
 <br>
 <em>a monitoring bot for your servers</em>
 </p>
@@ -12,12 +12,12 @@
 - :dog: Watchdog: Compact daemon for monitoing and alerting
 - :mag: Checkers: Ping, Celery/Flower
 - :loudspeaker: Handlers: Slack, Webhook, Log, Console
-- :speech_balloon: Slack integration
+- :speech_balloon: Integrations: Slack
 - :fire: Speed: Async requests, Python 3.11, uvloop and FastAPI ensure the max gauge of your *Python* 
 speedometer
 - :hibiscus: Settings: Declarative YAML. Fine tune to your liking or fire-and-forget.
 - :whale2: Docker: Pull the latest image from <a href="https://hub.docker.com/repository/docker/podkosa/moni" title="DockerHub">podkosa/moni</a>
-- :notebook: Docs: Interactive docs at /docs
+- :notebook: Docs: <a href="https://podkosa.github.io/moni/" title="Moni Docs">Moni Handbook</a>. Interactive docs at <a href="http://localhost:6767/docs" title="OpenAPI">/docs</a>
 
 ## Bot
 

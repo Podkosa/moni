@@ -59,4 +59,4 @@ integrations:
     signing_secret: signing_secret
 
 # request_timeout: 10               # Default timeout for all outgoing requests.
-# dttm_format: '%Y-%m-%d %H:%M:%S'  # Datetime format   https://docs.python.org/3/library/datetime.html#strftime-and-strptime-format-codes
+# dttm_format: '%Y-%m-%d %H:%M:%S'  # Timestamps datetime format  https://docs.python.org/3/library/datetime.html#strftime-and-strptime-format-codes
