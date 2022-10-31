@@ -6,15 +6,11 @@ features:
   bot_user:
     display_name: Moni
     always_online: false
-  shortcuts:
-    - name: Queues
-      type: global
-      callback_id: check_queues
-      description: Check queues size
   slash_commands:
     - command: /full_check
       url: http://your_moni_host/slack/
       description: Full check
+      usage_hint: "[host1, host2, ...]"
       should_escape: false
     - command: /ping
       url: http://your_moni_host/slack/
