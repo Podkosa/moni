@@ -4,7 +4,7 @@ checkers:
   flower:
     options:
       queues:
-        messages_threshold: 100     # Alert if queue size is greater or equal
+        size_threshold: 100     # Alert if queue size is greater or equal
       workers:                      # Alert if worker is down
     default:                        # Default values for servers
       handlers: [slack]

@@ -27,8 +27,8 @@ class FlowerChecker(Checker):
         self.options = options
         if not self.options or not ('queues' in self.options or 'workers' in self.options):
             raise settings.SettingsError(f'No options defined for {self.name} checker')
-        if (queues := self.options.get('queues')) and not queues.get('messages_threshold'):
-            raise settings.SettingsError(f'No messages_threshold for queues defined for {self.name} checker')
+        if (queues := self.options.get('queues')) and not queues.get('size_threshold'):
+            raise settings.SettingsError(f'No size_threshold for queues defined for {self.name} checker')
         super().__init__(*args, **kwargs)
 
     async def check(self) -> dict:
@@ -114,7 +114,7 @@ class FlowerChecker(Checker):
         return all(map(lambda i: i['is_normal'], self.data['queues'] + self.data['workers']))
 
     def _is_queue_normal(self, queue:dict) -> bool:
-        return queue['messages'] < self.options['queues']['messages_threshold']
+        return queue['messages'] < self.options['queues']['size_threshold']
 
     def _prepare_message(self) -> str:
         sub_messages = []
