@@ -1,6 +1,3 @@
----
-title: Overview
----
 <p align="center">
 <a href="https://podkosa.github.io/moni/" title="Moni Docs"><img src="https://repository-images.githubusercontent.com/557768275/3982bed6-12ee-4e85-9fea-166bee9df4e3"></a>
 <br>
