@@ -44,7 +44,7 @@ async def monitor():
     # As of 29.10.2022 `async with asyncio.TaskGroup` doesn't seem to be working when Watchdog is started as a script.
     # Never get's to execute anything from the `async with` body. Possible Python 3.11 bug, further investigation required.
 
-async def full_check(hosts: list[str] | None = None):
+async def full_check(hosts: list[str] | None = None) -> list[dict]:
     """Run all checks from settings.CHECKERS"""
     _checkers = get_checkers_from_settings(hosts=hosts, include_handlers=False, include_normal=True)
     if hosts:

@@ -8,6 +8,7 @@ router = APIRouter(prefix='/check')
 
 @router.get('/full_check/')
 async def full_check(hosts: list[str] | None = Query(default=None)) -> list[dict]:
+    """Run a full_check"""
     return await checkers.full_check(hosts)
 
 @router.get('/ping/')
