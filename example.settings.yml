@@ -58,6 +58,9 @@ integrations:
   slack:
     signing_secret: signing_secret
 
+# on_startup_handlers: [log]        # Notify that Moni/Watchdog is starting up
+# on_shutdown_handlers: [log]       # Notify that Moni is shutting down. Watchdog separately is not yet suported.
+
 ### General top level settings ###
 # logger_level: info                # Internal Moni logs levels: debug, info, warning/warn, error, critical
 # request_timeout: 10               # Default timeout for all outgoing requests.

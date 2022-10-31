@@ -56,3 +56,13 @@ if not HANDLERS:
 
 ### Integrations ###
 INTEGRATIONS = yml.get('integrations', {})
+
+### Startup/shutdown ###
+ON_STARTUP_HANDLERS = yml.get('on_startup_handlers', [])
+for handler in ON_STARTUP_HANDLERS:
+    if handler not in HANDLERS:
+        raise SettingsError(f'On startup handler {handler} is not defined in handlers')
+ON_SHUTDOWN_HANDLERS = yml.get('on_shutdown_handlers', [])
+for handler in ON_SHUTDOWN_HANDLERS:
+    if handler not in HANDLERS:
+        raise SettingsError(f'On shutdown handler {handler} is not defined in handlers')

@@ -2,7 +2,7 @@ from fastapi import FastAPI, Depends
 
 from conf import settings
 from web.endpoints import check
-from web import on_startup, auth, integrations
+from web import auth, integrations, startup_shutdown
 
 
 app = FastAPI()
@@ -13,8 +13,12 @@ for integration in settings.INTEGRATIONS:
 
 
 @app.on_event('startup')
-async def set_up():
-    await on_startup.set_up()
+async def on_startup():
+    await startup_shutdown.on_startup()
+
+@app.on_event('shutdown')
+async def on_shutdown():
+    await startup_shutdown.on_shutdown()
 
 @app.get('/ping')
 def ping() -> str:
