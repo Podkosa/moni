@@ -18,7 +18,7 @@ class FlowerChecker(Checker):
     def __init__(self,
         user: str,
         password: str,
-        options: dict = settings.CHECKERS['flower'].get('options', {}),
+        options: dict = settings.CHECKERS.get('flower', {}).get('options', {}),
         *args,
         **kwargs
         ):

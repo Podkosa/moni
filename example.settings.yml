@@ -21,10 +21,10 @@ checkers:
         handlers: [log]
         cycle: 30
 
-  ping:                             # Ping endpoint/slash command can also handle unknown hosts
+  ping:                             # Send a simple GET request to a host, alert for 400 and 500 responses. Endpoint/slash command can also handle unknown hosts
     servers:
       host1.com:
-        endpoint: /path/to/ping/
+        endpoint: path/to/ping/
 
 
 handlers:                           # All handlers send per-server check result.
@@ -58,5 +58,7 @@ integrations:
   slack:
     signing_secret: signing_secret
 
+### General top level settings ###
+# logger_level: info                # Internal Moni logs levels: debug, info, warning/warn, error, critical
 # request_timeout: 10               # Default timeout for all outgoing requests.
 # dttm_format: '%Y-%m-%d %H:%M:%S'  # Timestamps datetime format  https://docs.python.org/3/library/datetime.html#strftime-and-strptime-format-codes

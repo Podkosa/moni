@@ -1,5 +1,6 @@
-# Moni
-
+---
+title: Overview
+---
 <p align="center">
 <a href="https://podkosa.github.io/moni/" title="Moni Docs"><img src="https://repository-images.githubusercontent.com/557768275/3982bed6-12ee-4e85-9fea-166bee9df4e3"></a>
 <br>
@@ -28,23 +29,21 @@ HTTP server, handling incoming requests (REST, slash commands, integrations, web
 Periodically monitors servers with Checkers and alerts through Handlers.
 Can be run in two ways:
 
-1) Integrated (default).
+1. Integrated (default).
 Launch inside the bot async event loop. *Keep in mind thath they both will share a single thread, therefore can impact performance and even block one another.*
 More compact option, but not fit for scaling.
-2) Standalone.
-Run ./watchdog.py as a separate process/container, even without the bot.
-3) Disabled.
+2. Standalone.
+Run `watchdog.py` as a separate process/container, even without the bot.
+3. Disabled.
 You can turn off the watchdog completely and run checks from the bot at your own pace.
 
 ## Settings
 
-Define your servers, handlers, integrations and other settings declaratively in `settings.yml`. See `example.settings.yml`.
-This file will include your sensetive data, so be sure to take security measures.
-If you're deploying inside a container (e.g. Docker Compose), be sure to mount `./settings.yml:/botapp/settings.yml` through `volumes`.
+Define your servers, handlers, integrations and other settings declaratively in `settings.yml`. See `example.settings.yml`.<br>
 
 ## Integrations
 
-Slack: alerts to channels and slash commands. Install Moni in your Workspace with `./integrations_docs/slack_app_manifest.yml`.
+- Slack: alerts to channels and slash commands. Install Moni in your Workspace with `./integrations_docs/slack_app_manifest.yml`.
 
 ## TODO
 

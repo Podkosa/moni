@@ -19,4 +19,4 @@ def api_key_auth(
     for key in (api_key_query, api_key_header, api_key_cookie):
         if key == settings.API_KEY:
             return key
-    raise HTTPException(status_code=HTTP_403_FORBIDDEN, detail='Could not validate API KEY')
+    raise HTTPException(status_code=HTTP_403_FORBIDDEN, detail='Could not validate API key (access_token)')
