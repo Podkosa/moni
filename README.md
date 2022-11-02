@@ -7,7 +7,7 @@
 **Current features:**
 
 - :robot: Bot: HTTP-server for on-demand checks
-- :dog: Watchdog: Compact daemon for monitoing and alerting
+- :dog: Watchdog: Compact daemon for monitoring and alerting
 - :mag: Checkers: Ping, Celery/Flower
 - :loudspeaker: Handlers: Slack, Webhook, Log, Console
 - :speech_balloon: Integrations: Slack
@@ -27,7 +27,7 @@ Periodically monitors servers with Checkers and alerts through Handlers.
 Can be run in two ways:
 
 1. Integrated (default).
-Launch inside the bot async event loop. *Keep in mind thath they both will share a single thread, therefore can impact performance and even block one another.*
+Launch inside the bot async event loop. *Keep in mind that they both will share a single thread, therefore can impact performance and even block one another.*
 More compact option, but not fit for scaling.
 2. Standalone.
 Run `watchdog.py` as a separate process/container, even without the bot.
@@ -57,6 +57,6 @@ Define your servers, handlers, integrations and other settings declaratively in 
 - More alert handlers
 - More server checkers
 - More slash commands and REST options
-- Customisable checker (get response from server, parse it in some way, figure out the status)
-- Optional mutiprocessing, when there will be more checkers
+- Customizable checker (get response from server, parse it in some way, figure out the status)
+- Optional multiprocessing, when there will be more checkers
 - Tests

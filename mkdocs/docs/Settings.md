@@ -8,13 +8,13 @@ And if something is wrong, let's alert to standard `STDOUT`. Looks simple enough
 Let's create a `settings.yml` file in the project directory and fill it as we go.
 
 !!! warning "Security"
-    This file will include your sensetive data, so be sure to take security measures.
+    This file will include your sensitive data, so be sure to take security measures.
 
 !!! info "Containerization"
     If you're deploying inside a container (e.g. Docker), be sure to mount `./settings.yml:/moni/settings.yml` through `volumes`.
 
 ### API key
-Bot endpoints are protected with an API key. Pass it as a cookie, header or query qarameter named `access_token` with you requests to Moni.
+Bot endpoints are protected with an API key. Pass it as a cookie, header or query parameter named `access_token` with you requests to Moni.
 
 ~~~~ YAML title="settings.yml"
 api_key: key
@@ -89,7 +89,7 @@ Moni is up and Watchdog is already running your checks. When our host will not r
 ~~~~
 
 ### Logging
-If you want to make sure that you've set everything correctly and checks are actually running, you can set Moni internal loggin level from default `info` to `debug`.
+If you want to make sure that you've set everything correctly and checks are actually running, you can set Moni internal logging level from default `info` to `debug`.
 ~~~~ YAML title="settings.yml"
 logger_level: debug
 ~~~~
