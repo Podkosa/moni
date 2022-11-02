@@ -1,5 +1,5 @@
 from conf import settings
-from .abstract import Handler, HandlerError
+from .abstract import Handler
 from util import aio_requests
 
 

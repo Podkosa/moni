@@ -81,7 +81,7 @@ Watchdog is running
 INFO:     Application startup complete.
 INFO:     Uvicorn running on http://0.0.0.0:80 (Press CTRL+C to quit)
 ~~~~
-Moni is up and Watchdog is already running your checks. When our host will not response, you'll see a message with deatils on what whent wrong.
+Moni is up and Watchdog is already running your checks. When our host will not response, you'll see a message with details on what went wrong.
 ~~~~ console
 2022-10-31 12:00:00 PingChecker(podkosa.github.io) Cannot connect to host podkosa.github.io:443 ssl:default [Name or service not known]
 2022-10-31 12:05:00 PingChecker(podkosa.github.io) 404, message='Not Found', url=URL('https://podkosa.github.io/moni/')
