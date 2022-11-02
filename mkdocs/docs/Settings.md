@@ -93,7 +93,7 @@ If you want to make sure that you've set everything correctly and checks are act
 ~~~~ YAML title="settings.yml"
 logger_level: debug
 ~~~~
-And see somethins like:
+And see something like:
 ~~~~ console
 Running PingChecker(podkosa.github.io)
 Finished PingChecker(podkosa.github.io)
