@@ -1,5 +1,5 @@
 Main concept behind Moni is simplicity. For that, it uses declarative YAML settings.<br>
-Choose from Checkers, Handlers and Integrations, cherry-pick what you like, set up a Watchdog and you're ready to go.<br>
+Choose what you like from Checkers, Handlers and Integrations, set up Bot/Watchdog and you're ready to go.<br>
 Consult with `example.settings.yml` or follow up with an example below.
 
 ## Example
