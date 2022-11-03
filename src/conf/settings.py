@@ -51,8 +51,8 @@ for checker, conf in CHECKERS.items():
 
 ### Handlers ###
 HANDLERS = yml.get('handlers', {})
-if not HANDLERS:
-    raise SettingsError('At least one handler must be defined')
+if not HANDLERS and WATCHDOG.get('integrated'):
+    raise SettingsError('At least one handler must be defined to send alerts')
 
 ### Integrations ###
 INTEGRATIONS = yml.get('integrations', {})
