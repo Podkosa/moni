@@ -43,6 +43,7 @@ class FlowerChecker(Checker):
             message = self._prepare_message()
         self.result = {
             'host': self.host,
+            'check': self.name,
             'status': status,
             'message': message
         }

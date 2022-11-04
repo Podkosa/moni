@@ -1,19 +1,19 @@
-api_key: key                        # Access to all bot endpoints. Send it as `access_token` in header/cookie/query_param with your requests.
+api_key: key                          # Access to all bot endpoints. Send it as `access_token` in header/cookie/query_param with your requests.
 
-checkers:
+checkers:                             # What to monitor
   flower:
     options:
       queues:
-        size_threshold: 100     # Alert if queue size is greater or equal
-      workers:                      # Alert if worker is down
-    default:                        # Default values for servers
+        size_threshold: 100           # Alert if queue size is greater or equal
+      workers:                        # Alert if worker is down
+    default:                          # Default values for servers
       handlers: [slack]
       cycle: 50
       user: user1
       password: password1
-    servers:                        # Server settings can be set, in lookup order, on Server, Checker (per-checker default) or Watchdog (global default) level.
-      host1.com:                    # Pull settings from default (checker, watchdog)
-      host2.com:                    # Define/override certain settings for a server
+    servers:                          # Server settings can be set, in lookup order, on Server, Checker (per-checker default) or Watchdog (global default) level
+      host1.com:                      # Pull settings from default (checker, watchdog)
+      host2.com:                      # Define/override certain settings for a server
         user: user2
         password: password2
         port: 1111
@@ -21,47 +21,48 @@ checkers:
         handlers: [log]
         cycle: 30
 
-  ping:                             # Send a simple GET request to a host, alert for 400 and 500 responses. Endpoint/slash command can also handle unknown hosts
+  ping:                               # Send a simple GET request to a host, alert on bad responses or connection errors. Endpoint/slash command can also handle unknown hosts.
     servers:
       host1.com:
         endpoint: path/to/ping/
 
 
-handlers:                           # All handlers send per-server check result.
-  console:                          # STDOUT
+handlers:                             # Where to send alerts. All handlers send per-server check result.
+  console:                            # STDOUT
 
-  log:                              # Write to ./logs/filename. No rotation implemented yet.
+  log:                                # Write to ./logs/filename. No rotation implemented yet.
     filename: moni.log
 
-  webhook:                          # Send a POST request with check result as json:
-    url: http://your/webhook/url/   #   {"host": str, "status": bool, "message": str}
-    user: user                      # Set any auth/headers/cookies
+  webhook:                            # Send a POST request with check result as json:
+    url: http://your/webhook/url/     #   {"host": str, "check": str, "status": bool, "message": str}
+    user: user                        # Set any auth/headers/cookies
     password: password
     headers:
       header1: header1
     cookies:
       cookie1: cookie1
 
-  slack:                            # Send to a Slack channel
+  slack:                              # Send to a Slack channel
     webhook_url: https://hooks.slack.com/services/...
 
 
 watchdog:
-  integrated: true                  # Start Watchdog inside Bot async event loop.
-  default:                          # Global default values
-    cycle: 300
+  integrated: true                    # Start Watchdog inside Bot async event loop.
+  default:                            # Global default values
+    cycle: 300                        # Seconds to wait between checks
     handlers: [console]
-    protocol: 'https'               # Protocol for checkers requests
-
+    protocol: 'https'                 # Protocol for checkers requests
+    back_to_normal: false             # On a negative check alert normally, on further negative checks do not alert again, on a successful check send "back to normal" message. Defaults to False.
+    back_to_normal_cycle: 10          # Back to normal follow up cycle. Set this to less than `cycle` to do follow up checks faster. Defaults to `cycle`.
 
 integrations:
   slack:
     signing_secret: signing_secret
 
-# on_startup_handlers: [log]        # Notify that Moni/Watchdog is starting up
-# on_shutdown_handlers: [log]       # Notify that Moni is shutting down. Watchdog separately is not yet suported.
+# on_startup_handlers: [log]          # Notify that Moni/Watchdog is starting up
+# on_shutdown_handlers: [log]         # Notify that Moni is shutting down. Watchdog separately is not yet supported.
 
 ### General top level settings ###
-# logger_level: info                # Internal Moni logs levels: debug, info, warning/warn, error, critical
-# request_timeout: 10               # Default timeout for all outgoing requests.
-# dttm_format: '%Y-%m-%d %H:%M:%S'  # Timestamps datetime format  https://docs.python.org/3/library/datetime.html#strftime-and-strptime-format-codes
+# logger_level: info                  # Internal Moni logs levels: debug, info, warning/warn, error, critical
+# request_timeout: 10                 # Default timeout for all outgoing requests.
+# dttm_format: '%Y-%m-%d %H:%M:%S'    # Timestamps datetime format  https://docs.python.org/3/library/datetime.html#strftime-and-strptime-format-codes

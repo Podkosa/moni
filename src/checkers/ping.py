@@ -26,6 +26,7 @@ class PingChecker(Checker):
 
         self.result = {
             'host': self.host,
+            'check': self.name,
             'status': status,
             'message': message
         }
