@@ -1,5 +1,5 @@
 <p align="center">
-<a href="https://podkosa.github.io/moni/" title="Moni Docs"><img src="https://repository-images.githubusercontent.com/557768275/3982bed6-12ee-4e85-9fea-166bee9df4e3"></a>
+<a href="https://podkosa.github.io/moni/" title="Moni Docs"><img src="https://repository-images.githubusercontent.com/557768275/74d0d325-9309-4293-af48-3daf6f129a1c"></a>
 <br>
 <em>a monitoring bot for your servers</em>
 </p>
