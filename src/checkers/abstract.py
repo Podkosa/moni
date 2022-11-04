@@ -58,9 +58,8 @@ class Checker(ABC):
         if self.include_normal:
             await self.alert(self.result)        
         elif not self.result['status']:
-            if not self.back_to_normal:
-                await self.alert(self.result)
-            else:
+            await self.alert(self.result)
+            if self.back_to_normal:
                 await self.back_to_normal_monitor()
 
     async def alert(self, result: dict):
