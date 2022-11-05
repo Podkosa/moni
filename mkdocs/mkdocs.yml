@@ -57,6 +57,7 @@ edit_uri: ""
 
 nav:
   - Overview: README.md
+  - Getting Started: GettingStarted.md
   - Settings:
     - settings/index.md
     - settings/Example.md
