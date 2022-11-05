@@ -25,6 +25,7 @@ theme:
   features:
     - navigation.instant
     - navigation.tracking
+    - navigation.indexes
 plugins:
   - search
   - social
@@ -53,3 +54,22 @@ markdown_extensions:
 repo_url: https://github.com/Podkosa/moni
 repo_name: podkosa/moni
 edit_uri: ""
+
+nav:
+  - Overview: README.md
+  - Settings:
+    - settings/index.md
+    - settings/Example.md
+  - Checkers:
+    - checkers/index.md
+    - checkers/Ping.md
+    - checkers/Flower.md
+  - Handlers:
+    - handlers/index.md
+    - handlers/Console.md
+    - handlers/Log.md
+    - handlers/Webhook.md
+    - handlers/Slack.md
+  - Bot:
+    - bot/index.md
+    - bot/Integrations.md

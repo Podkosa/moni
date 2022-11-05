@@ -46,14 +46,12 @@ Define your servers, handlers, integrations and other settings declaratively in 
 
 - Telegram integration
 - Email handler
-- Remember previous alerts for subsequent checks, "back to normal" optional messages
 - Alert when X is not normal for more than N time
 - Slack timeout for /commands is 3 seconds. Refactor to delay the response.
 - Slack button on an alert to open up related service
 - Web interface for settings and checks
 - Endpoint to show loaded checkers and handlers
 - Endpoint to add servers to monitoring, turn on/off already configured ones
-- Flower failed tasks alert?
 - More alert handlers
 - More server checkers
 - More slash commands and REST options
