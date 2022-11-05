@@ -1,6 +1,7 @@
 services:
   moni:                                                 # Moni Bot and Watchdog
     image: podkosa/moni
+    restart: always
     ports: 
       - "6767:6767"
     volumes:
@@ -9,6 +10,7 @@ services:
 
   # moni_watchdog:                                      # If you want to run Watchdog separately
   #   image: podkosa/moni
+  #   restart: always
   #   command: ./watchdog.py
   #   volumes:
   #   - './settings.yml:/moni/settings.yml'
