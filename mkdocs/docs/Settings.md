@@ -64,7 +64,7 @@ handlers:
 ~~~~
 
 ### Watchdog
-With all of the above set, we have one last step to take (or rather one last :bone: to throw). Defining our :dog: **Watchdog**, that will run our checks periodically.
+With all of the above set, we have one last step to take (or rather one last :bone: to throw). Defining our :dog: **Watchdog**, that will run checks periodically.
 ~~~~ YAML title="settings.yml"
 watchdog:
   integrated: true

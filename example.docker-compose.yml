@@ -1,17 +1,14 @@
 services:
-  moni:
+  moni:                                                 # Moni Bot and Watchdog
     image: podkosa/moni
-    working_dir: /moni
-    command: uvicorn bot:app --host 0.0.0.0 --port 80
     ports: 
-      - "6767:80"
+      - "6767:6767"
     volumes:
     - './settings.yml:/moni/settings.yml'
     # - './logs/:/moni/logs'                            # If you plan logging to file
 
-  # moni_watchdog:
+  # moni_watchdog:                                      # If you want to run Watchdog separately
   #   image: podkosa/moni
-  #   working_dir: /moni
   #   command: ./watchdog.py
   #   volumes:
   #   - './settings.yml:/moni/settings.yml'
