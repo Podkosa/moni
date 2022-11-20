@@ -13,30 +13,15 @@ class PingChecker(Checker):
         self.endpoint = endpoint
         super().__init__(*args, **kwargs)    
 
-    async def check(self) -> dict:
-        try:
-            await self._get_data()
-        except (aiohttp.ClientError, asyncio.TimeoutError) as e:
-            logger.debug(f"Couldn't Ping {self.host}: {e.__class__.__name__} {str(e)}")
-            status = False
-            message = messages.prepare_error_message(self, e)
-        else:
-            status = True
-            message = self._prepare_message()
-
-        self.result = {
-            'host': self.host,
-            'check': self.name,
-            'status': status,
-            'message': message
-        }
-        return self.result
-
     async def _get_data(self):
         self.status_code = await aio_requests.get(
             self.url + (self.endpoint if self.endpoint else ''),
             response_type='status'
         )
+
+    def _parse_data(self) -> bool:
+        # _get_data() will raise Exceptions if status code is not 200 and `False` status would be set there
+        return True
 
     def _prepare_message(self) -> str:
         return f"{self._message_header}Response code: {self.status_code}"

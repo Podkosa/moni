@@ -7,6 +7,7 @@ from fastapi import HTTPException
 from conf import settings
 from conf.settings import logger
 from handlers.abstract import Handler
+from util import messages
 
 
 class CheckerError(Exception):
@@ -17,6 +18,7 @@ class Checker(ABC):
     """
     Base class for checkers. An instance represents a single server.
     Knows how to run, check and alert itself, start periodic monitoring.
+    Subclasses must define abstract methods.
     """
     name = ''
 
@@ -63,19 +65,42 @@ class Checker(ABC):
             if self.back_to_normal:
                 await self.back_to_normal_monitor()
 
+    async def check(self) -> dict:
+        try:
+            await self._get_data()
+        except Exception as e:
+            logger.debug(f"Couldn't check {self.name.capitalize()} on {self.host}: {e.__class__.__name__} {str(e)}")
+            status = False
+            message = messages.prepare_error_message(self, e)
+        else:
+            status = self._parse_data()
+            message = self._prepare_message()
+        self.result = {
+            'host': self.host,
+            'check': self.name,
+            'status': status,
+            'message': message
+        }
+        return self.result
+
+    @abstractmethod
+    async def _get_data(self) -> None:
+        """Request data from server, store in an attribute, return `None`"""
+        ...
+
+    @abstractmethod
+    def _parse_data(self) -> bool:
+        """Parse data, store results in an attribute, return server status (`bool`)"""
+        ...
+
+    @abstractmethod
+    def _prepare_message(self) -> str:
+        """Prepare a message based on parsed results, return `str`"""
+        ...
+
     async def alert(self, result: dict):
         """Send message through handlers"""
         await asyncio.gather(*(handler.handle(result) for handler in self.handlers))
-
-    @abstractmethod
-    async def check(self) -> dict:
-        ...
-        return {
-            'host': str,
-            'check': str,   # Checker name
-            'status': bool, # Check result
-            'message': str
-        }
 
     async def monitor(self) -> Coroutine:
         if not self.handlers or not self.cycle:

@@ -31,24 +31,6 @@ class FlowerChecker(Checker):
             raise settings.SettingsError(f'No size_threshold for queues defined for {self.name} checker')
         super().__init__(*args, **kwargs)
 
-    async def check(self) -> dict:
-        try:
-            await self._get_data()
-        except (aiohttp.ClientError, asyncio.TimeoutError) as e:
-            logger.debug(f"Couldn't check Flower on {self.host}: {e.__class__.__name__} {str(e)}")
-            status = False
-            message = messages.prepare_error_message(self, e)
-        else:
-            status = self._parse_data()
-            message = self._prepare_message()
-        self.result = {
-            'host': self.host,
-            'check': self.name,
-            'status': status,
-            'message': message
-        }
-        return self.result
-
     @classmethod
     async def check_queues(cls, hosts: list[str] | None = None) -> list[dict]:
         hosts_to_check = cls._parse_hosts(hosts)
