@@ -15,4 +15,5 @@ services:
   #   command: ./watchdog.py
   #   volumes:
   #   - './settings.yml:/moni/settings.yml'
+  #   - '~/.ssh/:/root/.ssh:ro'
   #  # - './logs/:/moni/logs'

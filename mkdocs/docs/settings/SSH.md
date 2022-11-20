@@ -22,7 +22,7 @@ Recommend you to get familiar with `.ssh/config` and how to pre-set aliases for 
 Host host_alias
   HostName your.host.com # or IP
   User root
-  IdentityFile ~/.ssh/some_key.perm
+  IdentityFile ~/.ssh/some_key.pub
 ~~~~
 ~~~~ YAML title="settings.yml"
 checkers:
