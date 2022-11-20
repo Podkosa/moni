@@ -1,4 +1,3 @@
-from asyncio.log import logger
 from typing import Any
 import aiohttp
 
@@ -13,7 +12,10 @@ async def post(url: str, data: dict, **kwargs) -> dict:
 
 async def request(method, url, **kwargs) -> Any:
     response_type = kwargs.pop('response_type', 'json')
-    async with aiohttp.ClientSession(timeout=settings.REQUEST_TIMEOUT, raise_for_status=True) as session:
+    async with aiohttp.ClientSession(
+        timeout=aiohttp.ClientTimeout(total=settings.REQUEST_TIMEOUT),
+        raise_for_status=True
+        ) as session:
         async with session.request(method, url, **kwargs) as resp:
             match response_type:
                 case 'json':

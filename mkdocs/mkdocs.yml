@@ -61,10 +61,12 @@ nav:
   - Settings:
     - settings/index.md
     - settings/Example.md
+    - settings/SSH.md
   - Checkers:
     - checkers/index.md
     - checkers/Ping.md
     - checkers/Flower.md
+    - checkers/Docker.md
   - Handlers:
     - handlers/index.md
     - handlers/Console.md

@@ -20,7 +20,7 @@ Shared across all checkers are `cycle`, `handlers`, `protocol`, `port`, `back_to
     Protocol to use for the requests. Defaults to `https`. 
 
 -   `port`: `int`<br>
-    Port to use for the requests. Defaults to not `None`, so 443(HTTPS) or 80(HTTP) is used. 
+    Port to use for the requests. Defaults to not `None`, so 443(HTTPS) and 22(SSH) are used. 
 
 -   `back_to_normal`: `bool`<br>
     Optional "back to normal" messages. On a negative check alert normally, on further negative checks do not alert again, on a successful check send "back to normal" message. Defaults to `False`.

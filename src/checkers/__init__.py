@@ -1,5 +1,6 @@
 from .flower import FlowerChecker
 from .ping import PingChecker
+from .docker import DockerChecker
 from .utils import get_loaded_checkers, full_check, monitor
 from .abstract import CheckerError
 

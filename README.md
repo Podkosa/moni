@@ -8,7 +8,7 @@
 
 - :robot: Bot: HTTP-server for on-demand checks
 - :dog: Watchdog: Compact daemon for monitoring and alerting
-- :mag: Checkers: Ping, Celery/Flower
+- :mag: Checkers: Ping, Celery/Flower, Docker containers (through SSH)
 - :loudspeaker: Handlers: Slack, Webhook, Log, Console
 - :speech_balloon: Integrations: Slack
 - :fire: Speed: Async requests, Python 3.11, uvloop and FastAPI ensure the max gauge of your *Python* 
@@ -55,6 +55,7 @@ Define your servers, handlers, integrations and other settings declaratively in 
 - More alert handlers
 - More server checkers
 - More slash commands and REST options
+- Proper loop exit
 - Customizable checker (get response from server, parse it in some way, figure out the status)
 - Optional multiprocessing, when there will be more checkers
 - Tests

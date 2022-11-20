@@ -6,14 +6,14 @@ from .abstract import Checker
 from util import aio_requests, messages
 
 
-_ENDPOINTS = {
-    'flower': 'flower/api',
-    'queues': '/queues/length',
-    'workers': '/workers'
-}
 
 class FlowerChecker(Checker):
     name = 'flower'
+    _ENDPOINTS = {
+        'flower': 'flower/api',
+        'queues': '/queues/length',
+        'workers': '/workers'
+    }
 
     def __init__(self,
         user: str,
@@ -88,14 +88,14 @@ class FlowerChecker(Checker):
         await asyncio.gather(*tasks)
 
     async def _get_queues(self):
-        self._queues_response = await self._flower_request(_ENDPOINTS['queues'])
+        self._queues_response = await self._flower_request(self._ENDPOINTS['queues'])
 
     async def _get_workers(self):
-        self._workers_response = await self._flower_request(_ENDPOINTS['workers'], params={'status': 'true'})
+        self._workers_response = await self._flower_request(self._ENDPOINTS['workers'], params={'status': 'true'})
 
     async def _flower_request(self, endpoint: str, params: dict | None = None):
         return await aio_requests.get(
-            self.url + _ENDPOINTS['flower'] + endpoint,
+            self.url + self._ENDPOINTS['flower'] + endpoint,
             params=params,
             auth=aiohttp.BasicAuth(self.user, self.password)
         )

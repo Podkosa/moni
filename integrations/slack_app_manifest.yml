@@ -32,6 +32,11 @@ features:
       description: Queues size
       usage_hint: "[host1, host2, ...]"
       should_escape: false
+    - command: /docker
+      url: http://your_moni_host/slack/
+      description: Docker containers status
+      usage_hint: "[host1, host2, ...]"
+      should_escape: false
 oauth_config:
   scopes:
     bot:

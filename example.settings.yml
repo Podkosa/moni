@@ -26,6 +26,11 @@ checkers:                             # What to monitor
       host1.com:
         endpoint: path/to/ping/
 
+  docker:                             # Run docker ps through SSH, check containers status. Requires mounting a volume '~/.ssh/:/root/.ssh'.
+    servers:
+      host1.com:
+      host2_alias:                    # If you have .ssh/config defined, this can be a Host alias. Recommended way.
+
 
 handlers:                             # Where to send alerts. All handlers send per-server check result.
   console:                            # STDOUT
@@ -64,5 +69,7 @@ integrations:
 
 ### General top level settings ###
 # logger_level: info                  # Internal Moni logs levels: debug, info, warning/warn, error, critical
-# request_timeout: 10                 # Default timeout for all outgoing requests.
+# request_timeout: 5                  # Default timeout for all outgoing requests. Defaults to 5 seconds.
+# ssh_timeout: 5                      # Default timeout for ssh connection and commands. Defaults to request_timeout.
+# ssh_passphrase: passphrase          # Passphrase for SSH keys. Defaults to None.
 # dttm_format: '%Y-%m-%d %H:%M:%S'    # Timestamps datetime format  https://docs.python.org/3/library/datetime.html#strftime-and-strptime-format-codes

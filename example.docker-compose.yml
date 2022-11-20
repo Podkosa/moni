@@ -6,9 +6,10 @@ services:
       - "6767:6767"
     volumes:
     - './settings.yml:/moni/settings.yml'
-    # - './logs/:/moni/logs'                            # If you plan logging to file
+    - '~/.ssh/:/root/.ssh:ro'                           # For SSH dependent Checkers (e.g. DockerChecker). Make sure to grant Unix ownership/permissions.
+    # - './logs/:/moni/logs'                            # For logging to file (LoggerHandler)
 
-  # moni_watchdog:                                      # If you want to run Watchdog separately
+  # moni_watchdog:                                      # Run Watchdog separately
   #   image: podkosa/moni
   #   restart: always
   #   command: ./watchdog.py

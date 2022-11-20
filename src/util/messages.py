@@ -9,9 +9,12 @@ def prepare_error_message(checker, e: Exception, with_traceback: bool = False) -
         return ''.join(traceback.format_exception(e))
     else:
         if str(e):
-            return f'{checker} {str(e)}'
+            message = f'{checker} {str(e)}'
         else:
-            return f'{checker} {e.__class__.__name__}'
+            message = f'{checker} {e.__class__.__name__}'
+        if notes := getattr(e, '__notes__', None):
+            message += '. ' + ', '.join(notes)
+        return message
 
 
 def timestamp() -> str:

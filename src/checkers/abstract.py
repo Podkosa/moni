@@ -21,7 +21,8 @@ class Checker(ABC):
     name = ''
 
     def __init__(
-        self, host: str,
+        self,
+        host: str,
         port: int | None = None,
         handlers: list[Handler] = [],
         cycle: int | float | None = None,
