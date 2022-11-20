@@ -1,4 +1,4 @@
-Checks Docker container status. Runs `docker ps -a --format ...` on your servers. Requires SSH (see **Settings/SSH**).
+Checks Docker containers status. Runs `docker ps -a --format ...` on your servers. Requires SSH (see **Settings/SSH**).
 
 ~~~~ YAML title="settings.yml"
 checkers:

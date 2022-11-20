@@ -54,8 +54,6 @@ Define your servers, handlers, integrations and other settings declaratively in 
 - Endpoint to add servers to monitoring, turn on/off already configured ones
 - More alert handlers
 - More server checkers
-- More slash commands and REST options
 - Proper loop exit
-- Customizable checker (get response from server, parse it in some way, figure out the status)
 - Optional multiprocessing, when there will be more checkers
 - Tests
