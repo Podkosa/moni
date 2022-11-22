@@ -58,9 +58,7 @@ class Checker(ABC):
     async def run(self):
         """Run a check, store results, alert if something is not normal."""
         self.result = await self.check()
-        if self.include_normal:
-            await self.alert(self.result)        
-        elif not self.result['status']:
+        if not self.result['status']:
             await self.alert(self.result)
             if self.back_to_normal:
                 await self.back_to_normal_monitor()
@@ -75,13 +73,13 @@ class Checker(ABC):
         else:
             status = self._parse_data()
             message = self._prepare_message()
-        self.result = {
+        result = {
             'host': self.host,
             'check': self.name,
             'status': status,
             'message': message
         }
-        return self.result
+        return result
 
     @abstractmethod
     async def _get_data(self) -> None:
@@ -123,15 +121,15 @@ class Checker(ABC):
             await asyncio.sleep(self.back_to_normal_cycle)  # type: ignore
             logger.debug(f'Follow up {self}')
             try:
-                result = await self.check()
+                followup_result = await self.check()
             except:
                 logger.exception(f'Exception during follow up {self}')
             else:
-                if result['status']:
+                if followup_result['status']:
                     break
         logger.debug(f'Finished follow up {self}: back to normal')
-        result['message'] = f'{self.host} is back to normal'
-        await self.alert(result)
+        followup_result['message'] = f'{self.host} is back to normal'
+        await self.alert(followup_result)
 
     @classmethod
     async def check_hosts(cls, hosts: list[str] | None = None) -> list[dict]:
